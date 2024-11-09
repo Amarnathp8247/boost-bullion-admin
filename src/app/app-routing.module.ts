@@ -1,30 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/auth-part/login/login.component';
-import { SignUpComponent } from './components/auth-part/sign-up/sign-up.component';
 import { SideBarComponent } from './components/pages/side-bar/side-bar.component';
 import { ProfilePageComponent } from './components/pages/profile-page/profile-page.component';
 import { AuthGuard } from './auth/auth.guard';
-import { HomePageComponent } from './components/landing-page/home-page/home-page.component';
 import { TradeRoomComponent } from './components/pages/trade-room/trade-room.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'login',
-  //   pathMatch: 'full'
-  // },
   {
     path: '',
-    component: HomePageComponent
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
     path: 'login',
     component: LoginComponent
-  },
-  {
-    path: 'signup',
-    component: SignUpComponent
   },
  
   {
