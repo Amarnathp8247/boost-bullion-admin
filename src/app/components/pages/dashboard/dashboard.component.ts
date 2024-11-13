@@ -10,8 +10,6 @@ import { TransactionServicesService } from 'src/app/services/transaction/transac
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
-
   token: any;
   loading = false;
   userBlance: any = 0
@@ -22,8 +20,9 @@ export class DashboardComponent {
   totalInternalTransferBalance: any = 0
   totalUnlockRewardBalnce: any = 0
   totalReferralRewardBalance: any = 0
+  totalRankBonusBalance: any = 0
   totalRewardBalance: any = 0
-  avaliableRewards: any = 0
+  pendingReward: any = 0
   refferalcode: any = ''
   bondBalance: any = ''
   totalCredited: number = 0;
@@ -44,38 +43,34 @@ export class DashboardComponent {
 
   }
   ngOnInit(): void {
-
-
-
     // Retrieve the token and profile info
     this.token = localStorage.getItem('authToken');
     this.getProfileInfo();
-
     this.fetchTransactions(this.currentPage, this.pageSize);
   }
 
 
 
-  getProfileInfo(): void {
+  getProfileInfo(): void {debugger
     this.loading = true;
     this.authService.getProfile(this.token).subscribe({
       next: (response) => {
 
-        this.userBlance = response.data.BUSDBalance
-        this.totalStakedBalance = response.data.totalStakedBalance
-        this.totalWithdrawalBalance = response.data.totalWithdrawalBalance
-        this.totalDirectTeamTurnoverBalance = response.data.totalDirectTeamTurnoverBalance
-        this.totalInternalTransferBalance = response.data.totalInternalTransferBalance
-        this.totalUnlockRewardBalnce = response.data.totalUnlockRewardBalnce
-        this.totalReferralRewardBalance = response.data.totalReferralRewardBalance
-        // this.totalRewardBalance = response.data.totalRewardBalance
-        this.bondBalance = response.data.totalStakingRewardBalance
-        // this.bondBalance = response.data.totalReferralRewardBalance
-        this.refferalcode = response.data.referralCode
-        this.avaliableRewards = response.data.totalRewardBalance - this.totalUnlockRewardBalnce
-        localStorage.setItem('balance', this.avaliableRewards)
-        localStorage.setItem('isTrxPassCreated', response.data.isTrxPassCreated)
-        localStorage.setItem('isWalletAdded', response.data.isWalletAdded)
+        this.userBlance = response.data[0].totalBUSDBalance
+        this.totalStakedBalance = response.data[0].totalStakedBalance
+        this.totalWithdrawalBalance = response.data[0].totalWithdrawalBalance
+        this.totalDirectTeamTurnoverBalance = response.data[0].totalDirectTeamTurnoverBalance
+        this.totalInternalTransferBalance = response.data[0].totalInternalTransferBalance
+        this.totalTeamTurnoverBalance = response.data[0].totalTeamTurnoverBalance
+        this.totalUnlockRewardBalnce = response.data[0].totalUnlockRewardBalnce
+        this.totalReferralRewardBalance = response.data[0].totalReferralRewardBalance
+        this.totalRankBonusBalance = response.data[0].totalRankBonusBalance
+        this.bondBalance = response.data[0].totalStakingRewardBalance
+        this.refferalcode = response.data[0].referralCode
+        this.pendingReward = response.data[0].pendingReward
+        localStorage.setItem('balance', this.pendingReward)
+        localStorage.setItem('isTrxPassCreated', response.data[0].isTrxPassCreated)
+        localStorage.setItem('isWalletAdded', response.data[0].isWalletAdded)
         this.loading = false;
       },
       error: (error) => {

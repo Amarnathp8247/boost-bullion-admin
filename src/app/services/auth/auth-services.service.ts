@@ -22,7 +22,7 @@ export class AuthServicesService {
   // Method to sign up a user
   login(userData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.apiUrl}/user/auth/login`, userData, { headers });
+    return this.http.post(`${this.apiUrl}/admin/auth/login`, userData, { headers });
   }
 
   forgotPassword(body: string , token:any): Observable<any> {
@@ -75,7 +75,7 @@ export class AuthServicesService {
     const headers = new HttpHeaders({
       Authorization: token
     });
-    return this.http.get(`${this.apiUrl}/user/profile`, { headers });
+    return this.http.get(`${this.apiUrl}/admin/dashboard`, { headers });
   } 
 
  

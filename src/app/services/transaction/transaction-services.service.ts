@@ -24,6 +24,6 @@ export class TransactionServicesService {
   getTransactions(page: number, size: number, token: string, params: any): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', token);
 
-    return this.http.get<any>(`${this.baseUrl}/user/wallet`, { headers, params });
+    return this.http.get<any>(`${this.baseUrl}/admin/transaction/list`, { headers, params });
 }
 }
