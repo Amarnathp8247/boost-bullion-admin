@@ -1,0 +1,235 @@
+<div class="wrapper">
+    <div id="content">
+        <div class="container">
+             <!-- Back Button -->
+             <div class="d-flex justify-content-end">
+                <button class="btn btn-primary mb-3" (click)="goBack()">
+                    <i class="fa fa-arrow-left"></i> Back
+                </button>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <div class="card shadow-sm mt-5">
+                        <div class="card-header text-white">
+                            <h2 class="card-title text-center mb-0">Profile</h2>
+                        </div>
+                        <div class="card-body">
+                            <!-- Profile Form -->
+                            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                                <!-- Full Name -->
+                                <div class="form-group mb-3">
+                                    <label for="name">User Id:</label>
+                                    <input type="text" id="name" class="form-control" formControlName="userId" />
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="name">User Id:</label>
+                                    <input type="text" id="name" class="form-control" formControlName="name" />
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-group mb-3">
+                                    <label for="name">Email Verified:</label>
+                                    <input type="text" id="name" class="form-control" formControlName="isEmailVerified" />
+                                </div>
+
+                                <!-- Mobile -->
+                                <div class="form-group mb-3" formControlName="isMobileVerified">
+                                    <label for="mobile">Mobile Verified:</label>
+                                    <select name="" id="" class="form-select">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                   
+                                </div>
+
+                                <div class="form-group mb-3" formControlName="isWithdrawAllowed">
+                                    <label for="mobile">Withdraw Allowed:</label>
+                                    <select name="" id="" class="form-select">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                   
+                                </div>
+
+                                <div class="form-group mb-3" formControlName="isStakingAllowed">
+                                    <label for="mobile">Staking Allowed:</label>
+                                    <select name="" id="" class="form-select">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                   
+                                </div>
+
+                                <div class="form-group mb-3" formControlName="isInternalTransferAllowed">
+                                    <label for="mobile">Internal Transfer Allowed:</label>
+                                    <select name="" id="" class="form-select">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                   
+                                </div>
+
+                                <div class="form-group mb-3" formControlName="isReferralAllowed">
+                                    <label for="mobile">Referral Allowed:</label>
+                                    <select name="" id="" class="form-select">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                   
+                                </div>
+
+                                <div class="form-group mb-3" formControlName="isWithdraw">
+                                    <label for="mobile">Withdraw:</label>
+                                    <select name="" id="" class="form-select">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                   
+                                </div>
+                                
+
+                                <div class="form-group mb-3" formControlName="isAvailableForReward">
+                                    <label for="mobile">Available For Reward:</label>
+                                    <select name="" id="" class="form-select">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                   
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary btn-block" [disabled]="profileForm.invalid">
+                                    Update Profile
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+               
+            </div>
+
+            <div class="row justify-content-center">
+                <!-- Change Transaction Password -->
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Change Login Password</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="changeTransactionPasswordForm" (ngSubmit)="changeTransactionPassword()">
+                            <div class="form-group mb-3">
+                                <label for="prevPassword">Previous Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showPrevPassword ? 'text' : 'password'"
+                                        id="prevPassword"
+                                        class="form-control"
+                                        formControlName="oldPassword"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showPrevPassword = !showPrevPassword">
+                                            <i [class]="showPrevPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="newPassword">New Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showNewPassword ? 'text' : 'password'"
+                                        id="newPassword"
+                                        class="form-control"
+                                        formControlName="newPassword"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showNewPassword = !showNewPassword">
+                                            <i [class]="showNewPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="cnfPassword">Confirm New Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showConfirmNewPassword ? 'text' : 'password'"
+                                        id="cnfPassword"
+                                        class="form-control"
+                                        formControlName="cnfPassword"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showConfirmNewPassword = !showConfirmNewPassword">
+                                            <i [class]="showConfirmNewPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-warning btn-block" [disabled]="changeTransactionPasswordForm.invalid">
+                                Change Password
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <!-- Create Transaction Password -->
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Create Transaction Password</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="createTransactionPasswordForm" (ngSubmit)="createTransactionPassword()">
+                            <div class="form-group mb-3">
+                                <label for="password">Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showPassword ? 'text' : 'password'"
+                                        id="password"
+                                        class="form-control"
+                                        formControlName="password"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
+                                            <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="cnfPassword">Confirm Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showConfirmPassword ? 'text' : 'password'"
+                                        id="cnfPassword"
+                                        class="form-control"
+                                        formControlName="cnfPassword"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showConfirmPassword = !showConfirmPassword">
+                                            <i [class]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" [disabled]="createTransactionPasswordForm.invalid">
+                                Create Password
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<p>user-list works!</p>
+<!-- src/app/transaction/transaction.component.html -->
+
+<div class="wrapper">
+    <!-- Page Content -->
+    <div id="content">
+        <div class="container">
+            <h2>User List</h2>
+
+            <!-- Loading and Error Messages -->
+            
+            <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+            <!-- Filter Section -->
+            <!-- <div class="filter-section mb-4">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="transactionType">Transaction Type</label>
+                        <select id="transactionType" class="form-control" [(ngModel)]="transactionType"
+                            (ngModelChange)="applyFilters()">
+                            <option value="">All</option>
+                            <option value="FUND-TRANSFER">Fund Transfer</option>
+                            <option value="BOND-IN">Bond In</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="status">Status</label>
+                        <select id="status" class="form-control" [(ngModel)]="status" (ngModelChange)="applyFilters()">
+                            <option value="">All</option>
+                            <option value="COMPLETED">Completed</option>
+                            <option value="FAILED">Failed</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="REJECTED">Rejected</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div> -->
+
+            <!-- Transactions Table -->
+            <div class="table-responsive">
+                <table class="table-data mt-4">
+                    <thead>
+                        <tr>
+                            <th>S.no</th>
+                            <th>Referral Code</th>
+                            <th>Login Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>mobile</th>
+                            <th>Bonus Balance</th>
+                            <!-- <th>Staked Balance</th>
+                            <th>Withdrawal Balance</th>
+                            <th>TeamTurnover Balance</th>
+                            <th>Direct Team Turnover Balance</th>
+                            <th>Removed Staked Balance</th>
+                            <th>Internal Transfer Balance</th>
+                            <th>Delegate Reward Balance</th>
+                            <th>Unlock Reward Balance</th>
+                            <th>Referral Reward Balance</th>
+                            <th>Staking Reward Balance</th>
+                            <th>Rank Bonus Balance</th>
+                            <th>Reward Balance</th>
+                            <th>TrxPassCreated</th>
+                            <th>Email Verified</th>
+                            <th>Mobile Verified</th>
+                            <th>Withdraw Allowed</th>
+                            <th>Staking Allowed</th>
+                            <th>Available ForReward</th> -->
+                            <th>rank</th>
+                            <th>airDorpLevel</th>
+                            <th>stakingLevel</th>
+                            <th>Reffral tree</th>
+                            <th>Action</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let transaction of transactions; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ transaction.referralCode }}</td>
+                            <td>{{transaction.loginId}}</td>
+                            <td>{{ transaction.name }}</td>
+                            <td>{{ transaction.email }}</td>
+                            <td>{{ transaction.mobile }}</td>
+                            <td>{{ transaction.bonusBalance }}</td>
+                            <!-- <td>{{ transaction.totalStakedBalance }}</td>
+                            <td>{{ transaction.totalWithdrawalBalance }}</td>
+                            <td>{{ transaction.totalTeamTurnoverBalance }}</td>
+                            <td>{{ transaction.totalDirectTeamTurnoverBalance }}</td>
+                            <td>{{ transaction.totalRemovedStakedBalance }}</td>
+                            <td>{{ transaction.totalInternalTransferBalance }}</td>
+                            <td>{{ transaction.totalDelegateRewardBalance }}</td>
+                            <td>{{ transaction.totalUnlockRewardBalnce }}</td>
+                            <td>{{ transaction.totalReferralRewardBalance }}</td>
+                            <td>{{ transaction.totalStakingRewardBalance }}</td>
+                            <td>{{ transaction.totalRankBonusBalance }}</td>
+                            <td>{{ transaction.totalRewardBalance }}</td>
+                            <td>{{ transaction.isTrxPassCreated }}</td>
+                            <td>{{ transaction.isEmailVerified }}</td>
+                            <td>{{ transaction.isMobileVerified }}</td>
+                            <td>{{ transaction.isWithdrawAllowed }}</td>
+                            <td>{{ transaction.isStakingAllowed }}</td>
+                            <td>{{ transaction.isAvailableForReward }}</td> -->
+                            <td>{{ transaction.rank }}</td>
+                            <td>{{ transaction.airDorpLevel }}</td>
+                            <td>{{ transaction.stakingLevel }}</td>
+                            <td (click)="getFreeraTree(transaction._id)" class="cursor-pointer"><i class="fa fa-eye"></i></td>
+                            <td (click)="updateUser(transaction._id)" class="cursor-pointer"> <i class="fa fa-pencil-alt"></i></td>
+                            <td>{{ transaction.createdAt | date: 'medium' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf=" transactions.length === 0">No transactions available.</div>
+
+            <!-- Paginator -->
+            <mat-paginator class="pagination" [length]="totalTransactions" [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25]" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/auth-part/login/login.component';
 import { SideBarComponent } from './components/pages/side-bar/side-bar.component';
-import { ProfilePageComponent } from './components/pages/profile-page/profile-page.component';
 import { AuthGuard } from './auth/auth.guard';
-import { TradeRoomComponent } from './components/pages/trade-room/trade-room.component';
+import { UserUpdateComponent } from './components/pages/user/user-update/user-update.component';
 
 const routes: Routes = [
   {
@@ -21,25 +20,24 @@ const routes: Routes = [
     path: '',
     component: SideBarComponent,
     children: [
-      { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
       { path: 'dashboard', loadChildren: () => import('./components/pages/dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuard] },
       { path: 'transaction', loadChildren: () => import('./components/pages/transaction/transaction.module').then(m => m.TransactionModule), canActivate: [AuthGuard] },
-      { path: 'wallet', loadChildren: () => import('./components/pages/wallet/wallet.module').then(m => m.WalletModule), canActivate: [AuthGuard] },
-      { path: 'setting', loadChildren: () => import('./components/pages/setting/setting.module').then(m => m.SettingModule), canActivate: [AuthGuard] },
-      { path: 'reffral-list', loadChildren: () => import('./components/pages/tree-list/tree-list.module').then(m => m.TreeListModule) },
-      { path: 'deposit', loadChildren: () => import('./components/pages/deposit/deposit.module').then(m => m.DepositModule) },
-      { path: 'withdraw', loadChildren: () => import('./components/pages/withdraw/withdraw.module').then(m => m.WithdrawModule) },
-      { path: 'fund-transfer', loadChildren: () => import('./components/pages/fund-transfer/fund-transfer.module').then(m => m.FundTransferModule) },
-      { path: 'bonding', loadChildren: () => import('./components/pages/bonding/bonding.module').then(m => m.BondingModule) },
+      
       { path: 'support', loadChildren: () => import('./components/pages/support/support.module').then(m => m.SupportModule) },
+      { path: 'user-list', loadChildren: () => import('./components/pages/user/user-list/user-list.module').then(m => m.UserListModule) },
+  
+      { path: 'reffral-tree', loadChildren: () => import('./components/pages/user/reffral-tree/reffral-tree.module').then(m => m.ReffralTreeModule) },
+  
+    
       {
-        path: 'trade-room',
-        component: TradeRoomComponent
-      },
+        path:"update-user",
+        component:UserUpdateComponent
+      }
 
       // Add other protected routes here
     ]
   },
+  
   
 
   { path: '**', redirectTo: 'login' }
