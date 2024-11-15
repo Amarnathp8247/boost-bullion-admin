@@ -20,7 +20,7 @@ export class WithdrawComponent {
   transactionType = 'WITHDRAW';
   transactions: any = [];
   totalTransactions: number = 0; 
-  loading = false;
+
 
   constructor(
     private walletService: WalletServiceService,

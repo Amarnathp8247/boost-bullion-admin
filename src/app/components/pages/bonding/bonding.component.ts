@@ -12,13 +12,12 @@ import { WalletServiceService } from 'src/app/services/wallet/wallet-service.ser
 export class BondingComponent {
   stakeForm: FormGroup;
   token: any;
-
   page = 1;
   sizePerPage = 10;
   transactionType = 'BOND-IN';
   transactions: any = [];
-  totalTransactions: number = 0; 
-  loading = false;
+  totalTransactions: number = 0;
+
   constructor(
     private walletService: WalletServiceService,
     private fb: FormBuilder, // Inject FormBuilder
@@ -28,9 +27,9 @@ export class BondingComponent {
     this.stakeForm = this.fb.group({
       amount: [0, [Validators.required, Validators.min(1)]],
     });
-   
-    
-   
+
+
+
   }
 
   ngOnInit(): void {
@@ -42,9 +41,9 @@ export class BondingComponent {
     if (this.stakeForm.valid) {
       const stakeAmount = this.stakeForm.value; // Get the value from the form
       this.walletService.stake(stakeAmount, this.token).subscribe({
-        next: (response:any) => {
-          console.log("response",response);
-          
+        next: (response: any) => {
+          console.log("response", response);
+
           this.toastr.success(response.body.message, '', {
             toastClass: 'toast-custom toast-success',
             positionClass: 'toast-bottom-center',
@@ -58,7 +57,7 @@ export class BondingComponent {
         },
         error: (err) => {
           const errorMessage = err.error?.message || 'Error validating referral code';
-        
+
           this.toastr.error(errorMessage, '', {
             toastClass: 'toast-custom toast-error',
             positionClass: 'toast-bottom-center',
@@ -66,7 +65,7 @@ export class BondingComponent {
             timeOut: 3000,
             progressBar: true
           });
-         
+
         }
       });
     }

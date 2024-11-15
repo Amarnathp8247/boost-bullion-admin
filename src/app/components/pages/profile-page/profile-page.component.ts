@@ -11,7 +11,7 @@ import { AuthServicesService } from 'src/app/services/auth/auth-services.service
 })
 export class ProfilePageComponent implements OnInit {
   profileForm!: FormGroup;
-  loading = false;
+
   isDarkMode: boolean = false;
   token: any;
 
@@ -39,7 +39,7 @@ export class ProfilePageComponent implements OnInit {
   
 
   getProfileInfo(): void {
-    this.loading = true;
+    $('.loader').show();
     this.authService.getProfile(this.token).subscribe({
       next: (response) => {
         this.profileForm.patchValue({
@@ -47,11 +47,11 @@ export class ProfilePageComponent implements OnInit {
           email: response.data.email,
           mobile: response.data.mobile,
         });
-        this.loading = false;
+        $('.loader').hide();
       },
       error: (error) => {
         this.toastr.error('Failed to load profile information', 'Error');
-        this.loading = false;
+        $('.loader').hide();
       }
     });
   }
@@ -59,7 +59,7 @@ export class ProfilePageComponent implements OnInit {
  // Method to handle form submission and update the profile
 updateProfile(): void {
   if (this.profileForm.valid) {
-    this.loading = true;
+    $('.loader').show();
 
     // Extract only the necessary fields
     const { name, email, mobile } = this.profileForm.value;
@@ -68,11 +68,11 @@ updateProfile(): void {
     this.authService.updateProfile(this.token, updatedData).subscribe({
       next: (response) => {
         this.toastr.success('Profile updated successfully!', 'Success');
-        this.loading = false;
+        $('.loader').hide();
       },
       error: (error) => {
         this.toastr.error('Failed to update profile', 'Error');
-        this.loading = false;
+        $('.loader').hide();
       }
     });
   } else {

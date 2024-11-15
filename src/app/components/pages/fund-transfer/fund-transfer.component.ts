@@ -21,7 +21,7 @@ export class FundTransferComponent {
   transactionType = 'FUND-TRANSFER';
   transactions: any = [];
   totalTransactions: number = 0; 
-  loading = false;
+
 
   constructor(
     private walletService: WalletServiceService,

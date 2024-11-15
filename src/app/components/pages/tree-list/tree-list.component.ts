@@ -15,7 +15,7 @@ export class TreeListComponent implements OnInit {
   public currentPage: number = 1;
   public itemPerPage: number = 10;
   pagelength: any;
-  loading = false;
+
   isDarkMode: boolean = false;
   token: any;
   referralTree: any[] = [];
@@ -37,19 +37,19 @@ export class TreeListComponent implements OnInit {
   }
 
   fetchReferralTree(): void {
-    this.loading = true;
+    $('.loader').show();
     this.authService.getReferralTree(this.token).subscribe({
       next: (response: any) => {
         this.referralTree = response.data; // Adjust this according to actual API response
         this.pagelength = this.referralTree.length;
         // this.filterReferrals();
         this.localPagination()
-        this.loading = false;
+        $('.loader').hide();
       },
       error: (err) => {
         console.error('Failed to fetch referral tree', err);
         this.toastr.error('Failed to fetch referral data');
-        this.loading = false;
+        $('.loader').hide();
         this.pagelength = 0;
       }
     });

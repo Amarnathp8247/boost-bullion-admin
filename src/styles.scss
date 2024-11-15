@@ -485,3 +485,14 @@ input[type = "textarea"]:focus {
   filter: invert(1) hue-rotate(180deg) brightness(0.9);
   border: none; /* Hide iframe borders */
 }
+.loader {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  background: url("assets/spinner.svg") no-repeat center center rgba(0, 0, 0, 0.8);
+  background-size: 100px 100px;
+  display: none;
+}

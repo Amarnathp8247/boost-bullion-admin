@@ -3,7 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { AuthServicesService } from 'src/app/services/auth/auth-services.service';
 import { TransactionServicesService } from 'src/app/services/transaction/transaction-services.service';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,7 +11,6 @@ import { TransactionServicesService } from 'src/app/services/transaction/transac
 })
 export class DashboardComponent {
   token: any;
-  loading = false;
   userBlance: any = 0
   totalStakedBalance: any = 0
   totalWithdrawalBalance: any = 0
@@ -43,16 +42,14 @@ export class DashboardComponent {
 
   }
   ngOnInit(): void {
+    $('.loader').show();
     // Retrieve the token and profile info
     this.token = localStorage.getItem('authToken');
     this.getProfileInfo();
     this.fetchTransactions(this.currentPage, this.pageSize);
   }
 
-
-
-  getProfileInfo(): void {debugger
-    this.loading = true;
+  getProfileInfo(): void {
     this.authService.getProfile(this.token).subscribe({
       next: (response) => {
 
@@ -66,23 +63,21 @@ export class DashboardComponent {
         this.totalReferralRewardBalance = response.data[0].totalReferralRewardBalance
         this.totalRankBonusBalance = response.data[0].totalRankBonusBalance
         this.bondBalance = response.data[0].totalStakingRewardBalance
-        this.refferalcode = response.data[0].referralCode
+        this.refferalcode = localStorage.getItem('referralCode');
         this.pendingReward = response.data[0].pendingReward
         localStorage.setItem('balance', this.pendingReward)
         localStorage.setItem('isTrxPassCreated', response.data[0].isTrxPassCreated)
         localStorage.setItem('isWalletAdded', response.data[0].isWalletAdded)
-        this.loading = false;
+        $('.loader').hide();
       },
       error: (error) => {
         this.toastr.error('Failed to load profile information', 'Error');
-        this.loading = false;
+        $('.loader').hide();
       }
     });
   }
 
   fetchTransactions(page: number, size: number): void {
-    this.loading = true;
-
     // Construct parameters object
     const params: any = {
       page: page.toString(),
@@ -110,11 +105,9 @@ export class DashboardComponent {
         this.filteredTransactions = [...this.transactions]; // Initialize filtered transactions
         this.totalTransactions = response.data.totalDocs; // total count for pagination
         this.calculateTotals(); // Calculate totals when transactions are fetched
-        this.loading = false;
       },
       error: (err) => {
         this.error = 'Failed to load transactions';
-        this.loading = false;
       }
     });
   }

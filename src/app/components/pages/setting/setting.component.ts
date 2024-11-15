@@ -15,7 +15,7 @@ export class SettingComponent implements OnInit {
   updateWalletAddressForm: FormGroup;
   createTransactionPasswordForm: FormGroup;
   changeTransactionPasswordForm: FormGroup;
-  loading = false;
+
   token: any;
   showCreateTransactionPassword: any ; // Flag for creating password form
   showUpdateWalletAddress: any ; // Flag for updating wallet address form
@@ -54,7 +54,7 @@ export class SettingComponent implements OnInit {
 
   
   getProfileInfo(): void {
-    this.loading = true;
+    $('.loader').show();
     this.authService.getProfile(this.token).subscribe({
       next: (response) => {
         // Show Create Transaction Password form if isTrxPassCreated is false
@@ -63,11 +63,11 @@ export class SettingComponent implements OnInit {
         // Show Update Wallet Address form if isWalletAdded is false
         this.showUpdateWalletAddress = response.data?.isWalletAdded === false;
   
-        this.loading = false;
+        $('.loader').hide();
       },
       error: (error) => {
         this.toastr.error('Failed to load profile information', 'Error');
-        this.loading = false;
+        $('.loader').hide();
       }
     });
   }

@@ -30,9 +30,6 @@ token:any
       mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-
-  
-
     this.changePasswordForm = this.fb.group({
       oldPassword: ['', [Validators.required, Validators.minLength(6)]],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -67,14 +64,15 @@ token:any
 
   onSubmit() {
     if (this.loginForm.valid) {
+      $('.loader').show();
       const loginData = this.loginForm.value;
-      console.log('Login data', loginData);
-
       this.authServices.login(loginData).subscribe({
         next: (response: any) => {
           const token = response.data.token;
+          const referralCode = response.data.sendData.referralCode;
           if (token) {
             localStorage.setItem('authToken', token); // Save token to localStorage
+            localStorage.setItem('referralCode', referralCode); // Save referralCode to localStorage
             this.toastr.success(response.message, '', {
               toastClass: 'toast-custom toast-success',
               positionClass: 'toast-bottom-center',
@@ -83,6 +81,7 @@ token:any
               progressBar: true
             });
             this.router.navigate(['/dashboard']); // Navigate to the dashboard
+            $('.loader').hide();
           } else {
             this.toastr.error(response.message, '', {
               toastClass: 'toast-custom toast-error',
@@ -91,6 +90,7 @@ token:any
               timeOut: 3000,
               progressBar: true
             });
+            $('.loader').hide();
           }
         },
         error: (err) => {
@@ -102,10 +102,12 @@ token:any
             timeOut: 3000,
             progressBar: true
           });
+          $('.loader').hide();
         }
       });
     } else {
       console.log('Form is invalid');
+      $('.loader').hide();
     }
   }
 

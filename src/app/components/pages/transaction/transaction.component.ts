@@ -9,7 +9,6 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class TransactionComponent implements OnInit {
   transactions: any[] = [];
-  loading = false;
   error: string | null = null;
   token: any;
   totalCredited: number = 0;
@@ -32,8 +31,7 @@ export class TransactionComponent implements OnInit {
   }
 
   fetchTransactions(page: number, size: number): void {
-    this.loading = true;
-
+    $('.loader').show();
     // Construct parameters object
     const params: any = {
       page: page.toString(),
@@ -60,11 +58,11 @@ export class TransactionComponent implements OnInit {
         this.filteredTransactions = [...this.transactions]; // Initialize filtered transactions
         this.totalTransactions = response.data.totalDocs; // total count for pagination
         this.calculateTotals(); // Calculate totals when transactions are fetched
-        this.loading = false;
+        $('.loader').hide();
       },
       error: (err) => {
         this.error = 'Failed to load transactions';
-        this.loading = false;
+        $('.loader').hide();
       }
     });
   }

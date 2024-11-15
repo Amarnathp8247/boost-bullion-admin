@@ -7,7 +7,7 @@
       <h2>Transaction History</h2>
 
       <!-- Loading and Error Messages -->
-      <div *ngIf="loading">Loading transactions...</div>
+      <div >Loading transactions...</div>
       <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
       <!-- Filter Section -->
@@ -71,7 +71,7 @@
         </table>
       </div>
 
-      <div *ngIf="!loading && transactions.length === 0">No transactions available.</div>
+      <div *ngIf=" transactions.length === 0">No transactions available.</div>
 
       <!-- Paginator -->
       <mat-paginator class="pagination" [length]="totalTransactions" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"

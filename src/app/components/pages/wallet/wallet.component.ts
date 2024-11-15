@@ -19,7 +19,7 @@ export class WalletComponent implements OnInit {
   transactionType = 'CONVERT-REWARD';
   transactions: any = [];
   totalTransactions: number = 0; 
-  loading = false;
+
 
   constructor(
     private walletService: WalletServiceService,
