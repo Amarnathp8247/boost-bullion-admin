@@ -41,9 +41,23 @@ export class UserServicesService {
   }
 
   // Method to sign up a user
-  updateProfile(token: string, updatedData: any): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', token);
-    return this.http.put(`${this.baseUrl}/admin/user/update`, updatedData, { headers });
+  updateProfile(updatedData: any , token: string ): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
+
+    const body = new URLSearchParams();
+    Object.keys(updatedData).forEach((key) => {
+      body.set(key, updatedData[key]);
+    });
+
+    return this.http.put(`${this.baseUrl}/admin/user/update`, body, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error:', error.error.message || 'Unknown error');
+        return throwError(() => error);
+      })
+    );;
   }
   changeTranxPawword(
     data: { userId: string; password: string },

@@ -7,13 +7,11 @@
         <div class="container">
             <h2>User List</h2>
 
-            <div class="form-group mb-3 w-25">
-                <!-- <input type="text" class="form-control "
-                    style="background-color: aliceblue !important;  color: black;" placeholder="Search "
-                    [(ngModel)]="searchQuery" (ngModelChange)="filterReferrals()" /> -->
-                    <input class="report-search-bttn" type="text" placeholder="Search..." [(ngModel)]="searchTerm" (keyup)="filterReferrals()" />
-            </div>
-
+            <div class="filter-container">
+                <label for="search">Search:</label>
+                <input id="search" type="text" class="form-control" [(ngModel)]="filter.search" (input)="applyFilters()" placeholder="Enter search term" />
+              
+               
             <!-- Loading and Error Messages -->
             
             <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
@@ -85,9 +83,9 @@
             <div *ngIf=" transactions.length === 0">No transactions available.</div>
 
             <!-- Paginator -->
-            <mat-paginator #paginator [length]="pagelength" [pageSize]="itemPerPage" showFirstLastButtons="true"
-            aria-label="Select page" [pageSizeOptions]="[10, 25, 50]" (page)="onPageChange($event)" class="pagination" >
-          </mat-paginator>
+      <mat-paginator class="pagination" [length]="totalTransactions" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPageChange($event)">
+    </mat-paginator>
         </div>
     </div>
 </div>

@@ -184,9 +184,11 @@ export class UserUpdateComponent {
   
       // Extract only the necessary fields
       const updatedData = this.profileForm.value;
+      console.log("updatedData" , updatedData);
+      
   
       // Call the update profile service
-      this.authService.updateProfile(this.token, updatedData).subscribe({
+      this.authService.updateProfile( updatedData ,this.token, ).subscribe({
         next: (response) => {
           this.toastr.success('Profile updated successfully!', 'Success');
           $('.loader').hide();
