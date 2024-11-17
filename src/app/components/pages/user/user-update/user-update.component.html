@@ -1,13 +1,30 @@
 <div class="wrapper">
     <div id="content">
         <div class="container">
-             <!-- Back Button -->
-             <div class="d-flex justify-content-end">
+            <!-- Back Button -->
+            <div class="d-flex justify-content-end">
                 <button class="btn btn-primary mb-3" (click)="goBack()">
                     <i class="fa fa-arrow-left"></i> Back
                 </button>
             </div>
-            <div class="row justify-content-center">
+
+            <div class="d-flex justify-content-center my-4">
+                <button class="btn btn-primary mx-2" (click)="setActiveSection('profile')">
+                    Profile update
+                </button>
+                <button class="btn btn-warning mx-2" (click)="setActiveSection('changePassword')">
+                    Login Password
+                </button>
+                <button class="btn btn-success mx-2" (click)="setActiveSection('createPassword')">
+                    Transaction Password
+                </button>
+                <button class="btn btn-success mx-2" (click)="setActiveSection('referral-tree')">
+                    Reffral Tree
+                </button>
+            </div>
+
+
+            <div class="row justify-content-center" *ngIf="activeSection === 'profile'">
                 <div class="col-lg-6 col-md-8 col-sm-10">
                     <div class="card shadow-sm mt-5">
                         <div class="card-header text-white">
@@ -16,88 +33,72 @@
                         <div class="card-body">
                             <!-- Profile Form -->
                             <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                                <!-- User ID -->
+                                <div class="form-group mb-3">
+                                    <label for="userId">User ID:</label>
+                                    <input type="text" id="userId" class="form-control" formControlName="userId" />
+                                </div>
+            
                                 <!-- Full Name -->
                                 <div class="form-group mb-3">
-                                    <label for="name">User Id:</label>
-                                    <input type="text" id="name" class="form-control" formControlName="userId" />
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label for="name">User Id:</label>
+                                    <label for="name">Name:</label>
                                     <input type="text" id="name" class="form-control" formControlName="name" />
                                 </div>
-
-                                <!-- Email -->
+            
+                                <!-- Email Verified -->
                                 <div class="form-group mb-3">
-                                    <label for="name">Email Verified:</label>
-                                    <input type="text" id="name" class="form-control" formControlName="isEmailVerified" />
-                                </div>
-
-                                <!-- Mobile -->
-                                <div class="form-group mb-3" formControlName="isMobileVerified">
-                                    <label for="mobile">Mobile Verified:</label>
-                                    <select name="" id="" class="form-select">
-                                        <option value=""></option>
-                                        <option value=""></option>
+                                    <label for="isEmailVerified">Email Verified:</label>
+                                    <select id="isEmailVerified" class="form-select" formControlName="isEmailVerified">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
                                     </select>
-                                   
                                 </div>
-
-                                <div class="form-group mb-3" formControlName="isWithdrawAllowed">
-                                    <label for="mobile">Withdraw Allowed:</label>
-                                    <select name="" id="" class="form-select">
-                                        <option value=""></option>
-                                        <option value=""></option>
+            
+                                <!-- Mobile Verified -->
+                                <div class="form-group mb-3">
+                                    <label for="isMobileVerified">Mobile Verified:</label>
+                                    <select id="isMobileVerified" class="form-select" formControlName="isMobileVerified">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
                                     </select>
-                                   
                                 </div>
-
-                                <div class="form-group mb-3" formControlName="isStakingAllowed">
-                                    <label for="mobile">Staking Allowed:</label>
-                                    <select name="" id="" class="form-select">
-                                        <option value=""></option>
-                                        <option value=""></option>
+            
+                                <!-- Withdraw Allowed -->
+                                <div class="form-group mb-3">
+                                    <label for="isWithdrawAllowed">Withdraw Allowed:</label>
+                                    <select id="isWithdrawAllowed" class="form-select" formControlName="isWithdrawAllowed">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
                                     </select>
-                                   
                                 </div>
-
-                                <div class="form-group mb-3" formControlName="isInternalTransferAllowed">
-                                    <label for="mobile">Internal Transfer Allowed:</label>
-                                    <select name="" id="" class="form-select">
-                                        <option value=""></option>
-                                        <option value=""></option>
+            
+                                <!-- Staking Allowed -->
+                                <div class="form-group mb-3">
+                                    <label for="isStakingAllowed">Staking Allowed:</label>
+                                    <select id="isStakingAllowed" class="form-select" formControlName="isStakingAllowed">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
                                     </select>
-                                   
                                 </div>
-
-                                <div class="form-group mb-3" formControlName="isReferralAllowed">
-                                    <label for="mobile">Referral Allowed:</label>
-                                    <select name="" id="" class="form-select">
-                                        <option value=""></option>
-                                        <option value=""></option>
+            
+                                <!-- Internal Transfer Allowed -->
+                                <div class="form-group mb-3">
+                                    <label for="isInternalTransferAllowed">Internal Transfer Allowed:</label>
+                                    <select id="isInternalTransferAllowed" class="form-select" formControlName="isInternalTransferAllowed">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
                                     </select>
-                                   
                                 </div>
-
-                                <div class="form-group mb-3" formControlName="isWithdraw">
-                                    <label for="mobile">Withdraw:</label>
-                                    <select name="" id="" class="form-select">
-                                        <option value=""></option>
-                                        <option value=""></option>
+            
+                                <!-- Available for Reward -->
+                                <div class="form-group mb-3">
+                                    <label for="isAvailableForReward">Available for Reward:</label>
+                                    <select id="isAvailableForReward" class="form-select" formControlName="isAvailableForReward">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
                                     </select>
-                                   
                                 </div>
-                                
-
-                                <div class="form-group mb-3" formControlName="isAvailableForReward">
-                                    <label for="mobile">Available For Reward:</label>
-                                    <select name="" id="" class="form-select">
-                                        <option value=""></option>
-                                        <option value=""></option>
-                                    </select>
-                                   
-                                </div>
-
+            
                                 <!-- Submit Button -->
                                 <button type="submit" class="btn btn-primary btn-block" [disabled]="profileForm.invalid">
                                     Update Profile
@@ -105,73 +106,42 @@
                             </form>
                         </div>
                     </div>
-
-                    
                 </div>
-
-               
             </div>
+            
 
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" *ngIf="activeSection === 'changePassword'">
                 <!-- Change Transaction Password -->
                 <div class="card shadow-sm mt-5 col-12 col-md-6">
                     <div class="card-header text-white">
                         <h2 class="card-title text-center mb-0">Change Login Password</h2>
                     </div>
                     <div class="card-body">
-                        <form [formGroup]="changeTransactionPasswordForm" (ngSubmit)="changeTransactionPassword()">
+                        <form [formGroup]="chnageLoginPassword" (ngSubmit)="changeUserLoginPassword()">
                             <div class="form-group mb-3">
                                 <label for="prevPassword">Previous Password:</label>
                                 <div class="input-group">
-                                    <input
-                                        [type]="showPrevPassword ? 'text' : 'password'"
-                                        id="prevPassword"
-                                        class="form-control"
-                                        formControlName="oldPassword"
-                                        required
-                                    />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary" (click)="showPrevPassword = !showPrevPassword">
-                                            <i [class]="showPrevPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
-                                        </button>
-                                    </div>
+                                    <input type="text" id="prevPassword"
+                                        class="form-control" formControlName="userId" required />
+                                  
                                 </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="newPassword">New Password:</label>
                                 <div class="input-group">
-                                    <input
-                                        [type]="showNewPassword ? 'text' : 'password'"
-                                        id="newPassword"
-                                        class="form-control"
-                                        formControlName="newPassword"
-                                        required
-                                    />
+                                    <input [type]="showNewPassword ? 'text' : 'password'" id="newPassword"
+                                        class="form-control" formControlName="password" required />
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary" (click)="showNewPassword = !showNewPassword">
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            (click)="showNewPassword = !showNewPassword">
                                             <i [class]="showNewPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="cnfPassword">Confirm New Password:</label>
-                                <div class="input-group">
-                                    <input
-                                        [type]="showConfirmNewPassword ? 'text' : 'password'"
-                                        id="cnfPassword"
-                                        class="form-control"
-                                        formControlName="cnfPassword"
-                                        required
-                                    />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary" (click)="showConfirmNewPassword = !showConfirmNewPassword">
-                                            <i [class]="showConfirmNewPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-warning btn-block" [disabled]="changeTransactionPasswordForm.invalid">
+                           
+                            <button type="submit" class="btn btn-warning btn-block"
+                                [disabled]="chnageLoginPassword.invalid">
                                 Change Password
                             </button>
                         </form>
@@ -179,49 +149,37 @@
                 </div>
             </div>
 
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" *ngIf="activeSection === 'createPassword'">
                 <!-- Create Transaction Password -->
                 <div class="card shadow-sm mt-5 col-12 col-md-6">
                     <div class="card-header text-white">
-                        <h2 class="card-title text-center mb-0">Create Transaction Password</h2>
+                        <h2 class="card-title text-center mb-0">Change Transaction Password</h2>
                     </div>
                     <div class="card-body">
-                        <form [formGroup]="createTransactionPasswordForm" (ngSubmit)="createTransactionPassword()">
+                        <form [formGroup]="changeTraxPassword" (ngSubmit)="changeTranxPassword()">
                             <div class="form-group mb-3">
                                 <label for="password">Password:</label>
                                 <div class="input-group">
-                                    <input
-                                        [type]="showPassword ? 'text' : 'password'"
-                                        id="password"
-                                        class="form-control"
-                                        formControlName="password"
-                                        required
-                                    />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
-                                            <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
-                                        </button>
-                                    </div>
+                                    <input type="text" id="password"
+                                        class="form-control" formControlName="userId" required />
+                                   
                                 </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="cnfPassword">Confirm Password:</label>
                                 <div class="input-group">
-                                    <input
-                                        [type]="showConfirmPassword ? 'text' : 'password'"
-                                        id="cnfPassword"
-                                        class="form-control"
-                                        formControlName="cnfPassword"
-                                        required
-                                    />
+                                    <input [type]="showConfirmPassword ? 'text' : 'password'" id="cnfPassword"
+                                        class="form-control" formControlName="password" required />
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary" (click)="showConfirmPassword = !showConfirmPassword">
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            (click)="showConfirmPassword = !showConfirmPassword">
                                             <i [class]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block" [disabled]="createTransactionPasswordForm.invalid">
+                            <button type="submit" class="btn btn-primary btn-block"
+                                [disabled]="changeTraxPassword.invalid">
                                 Create Password
                             </button>
                         </form>
@@ -229,7 +187,59 @@
                 </div>
             </div>
 
-           
+            <div class="row justify-content-center" *ngIf="activeSection === 'referral-tree'">
+                <div class="col-md-8 col-sm-10">
+                    <!-- Referral Tree Table -->
+                    <div class="mt-4">
+                        <div class="card  text-light justify-content-between">
+                            <p-tree [value]="nodes" [filter]="true" selectionMode="checkbox"
+                                (onNodeSelect)="onNodeSelect($event)" [style]="{'margin-top': '20px'}"></p-tree>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-10">
+                    <!-- Referral Tree Table -->
+                    <div class="mt-4">
+                        <div class="card justify-content-between">
+                            <!-- Referral User Info -->
+                            <div class="mt-4">
+                                <div class="card">
+                                    <div class="card-header text-white">
+                                        <h2 class="card-title text-center mb-0">Referral User data</h2>
+                                    </div>
+                                    <div class="card-body" *ngIf="selectedReferral">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                Name:
+                                                <span class="mx-1">{{ selectedReferral.name }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Referral Code:
+                                                <span class="mx-1">{{ selectedReferral.referralCode }}</span>
+                                            </li>
+                                            <!-- <li class="list-group-item">
+                                                 Email:
+                                                <span class="mx-1">{{ selectedReferral.email }}</span>
+                                            </li> -->
+                                            <!-- Add more user details with icons as needed -->
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="!selectedReferral">
+                                        <p class="text-center"><i class="fa fa-exclamation-triangle"></i> No user
+                                            selected</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -38,9 +38,9 @@
             </div> -->
 
             <!-- Transactions Table -->
-            <div class="table-responsive">
-                <table class="table-data mt-4">
-                    <thead>
+            <div class="table-responsive ">
+                <table class="table-data mt-4 " >
+                    <thead >
                         <tr>
                             <th>S.no</th>
                             <th>Referral Code</th>
@@ -49,7 +49,7 @@
                             <th>Email</th>
                             <th>mobile</th>
                             <th>Bonus Balance</th>
-                            <!-- <th>Staked Balance</th>
+                            <th>Staked Balance</th>
                             <th>Withdrawal Balance</th>
                             <th>TeamTurnover Balance</th>
                             <th>Direct Team Turnover Balance</th>
@@ -66,11 +66,10 @@
                             <th>Mobile Verified</th>
                             <th>Withdraw Allowed</th>
                             <th>Staking Allowed</th>
-                            <th>Available ForReward</th> -->
+                            <th>Available ForReward</th>
                             <th>rank</th>
                             <th>airDorpLevel</th>
                             <th>stakingLevel</th>
-                            <th>Reffral tree</th>
                             <th>Action</th>
                             <th>Date</th>
                         </tr>
@@ -84,7 +83,7 @@
                             <td>{{ transaction.email }}</td>
                             <td>{{ transaction.mobile }}</td>
                             <td>{{ transaction.bonusBalance }}</td>
-                            <!-- <td>{{ transaction.totalStakedBalance }}</td>
+                            <td>{{ transaction.totalStakedBalance }}</td>
                             <td>{{ transaction.totalWithdrawalBalance }}</td>
                             <td>{{ transaction.totalTeamTurnoverBalance }}</td>
                             <td>{{ transaction.totalDirectTeamTurnoverBalance }}</td>
@@ -101,11 +100,10 @@
                             <td>{{ transaction.isMobileVerified }}</td>
                             <td>{{ transaction.isWithdrawAllowed }}</td>
                             <td>{{ transaction.isStakingAllowed }}</td>
-                            <td>{{ transaction.isAvailableForReward }}</td> -->
+                            <td>{{ transaction.isAvailableForReward }}</td> 
                             <td>{{ transaction.rank }}</td>
                             <td>{{ transaction.airDorpLevel }}</td>
                             <td>{{ transaction.stakingLevel }}</td>
-                            <td (click)="getFreeraTree(transaction._id)" class="cursor-pointer"><i class="fa fa-eye"></i></td>
                             <td (click)="updateUser(transaction._id)" class="cursor-pointer"> <i class="fa fa-pencil-alt"></i></td>
                             <td>{{ transaction.createdAt | date: 'medium' }}</td>
                         </tr>

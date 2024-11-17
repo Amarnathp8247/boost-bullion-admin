@@ -31,10 +31,10 @@ export class UserListComponent {
 
   ngOnInit(): void {
     this.token = localStorage.getItem('authToken');
-    this.fetchTransactions(this.currentPage, this.pageSize);
+    this.userList(this.currentPage, this.pageSize);
   }
 
-  fetchTransactions(page: number, size: number): void {
+  userList(page: number, size: number): void {
     $('.loader').show();
     // Construct parameters object
     const params: any = {
@@ -96,7 +96,7 @@ export class UserListComponent {
     // Reset current page to 1 when applying new filters
     this.currentPage = 1;
     // Call fetchTransactions with updated filters
-    this.fetchTransactions(this.currentPage, this.pageSize);
+    this.userList(this.currentPage, this.pageSize);
   }
 
 
@@ -114,7 +114,7 @@ export class UserListComponent {
   onPageChange(event: PageEvent): void {
     this.currentPage = event.pageIndex + 1; // MatPaginator pageIndex starts from 0
     this.pageSize = event.pageSize;
-    this.fetchTransactions(this.currentPage, this.pageSize);
+    this.userList(this.currentPage, this.pageSize);
   }
 }
 

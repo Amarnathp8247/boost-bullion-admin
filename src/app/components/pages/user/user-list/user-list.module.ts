@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserUpdateComponent } from '../user-update/user-update.component';
 import { UserKycComponent } from '../user-kyc/user-kyc.component';
 import { TeamTransferComponent } from '../team-transfer/team-transfer.component';
+import { TreeModule } from 'primeng/tree';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { TeamTransferComponent } from '../team-transfer/team-transfer.component'
     MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
+    TreeModule
    
   ]
 })

@@ -15,6 +15,24 @@ border-bottom: 2px solid rgb(185, 137, 5) !important;">
             <i class="fa-solid fa-bars"></i> <!-- Font Awesome Icon -->
         </button>
 
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+               
+
+                <!-- Dark Mode Toggle Button -->
+                <li class="nav-item ms-3">
+                    <div class="float-md-end d-inline-block mt-2 cursor-pointer">
+                        <span *ngIf="!isDarkMode" class="me-2">
+                            <i class="fa-solid fa-sun fs-2" (click)="toggleDarkMode(true)"></i>
+                        </span>
+                        <span *ngIf="isDarkMode">
+                            <i class="fa-regular fa-moon fs-2" (click)="toggleDarkMode(false)"></i>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
       
     </div>
 </nav>

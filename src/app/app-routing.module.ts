@@ -26,7 +26,6 @@ const routes: Routes = [
       { path: 'support', loadChildren: () => import('./components/pages/support/support.module').then(m => m.SupportModule) },
       { path: 'user-list', loadChildren: () => import('./components/pages/user/user-list/user-list.module').then(m => m.UserListModule) },
   
-      { path: 'reffral-tree', loadChildren: () => import('./components/pages/user/reffral-tree/reffral-tree.module').then(m => m.ReffralTreeModule) },
   
     
       {

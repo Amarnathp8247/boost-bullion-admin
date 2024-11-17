@@ -42,24 +42,40 @@ export class UserServicesService {
 
   // Method to sign up a user
   updateProfile(token: string, updatedData: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Authorization': token, 'Content-Type': 'application/json' });
-
-  
+    const headers = new HttpHeaders().set('Authorization', token);
     return this.http.put(`${this.baseUrl}/admin/user/update`, updatedData, { headers });
   }
+  changeTranxPawword(
+    data: { userId: string; password: string },
+    token: string
+  ): Observable<any> {
+    // Set headers with Authorization token
+    const headers = new HttpHeaders({
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
 
-  createTransactionPasswordData(body: any,  token: string): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', token);
+    // Format the request body as x-www-form-urlencoded
+    const body = new URLSearchParams();
+    body.set('userId', data.userId);
+    body.set('password', data.password);
 
-    return this.http.post(`${this.baseUrl}/user/wallet/create/transaction/password`, body, { headers, observe: 'response' })
-      .pipe(
-        catchError(this.handleError) // Handle error gracefully
-      );
+    // Send the PUT request
+    return this.http.put(`${this.baseUrl}/admin/user/change/trx/password`, body.toString(), { headers, observe: 'response' });
   }
-  changeTransactionPasswordData(body: any,  token: string): Observable<any> {
+
+  // changeTranxPawword(body: any,  token: string): Observable<any> {
+  //   const headers = new HttpHeaders({'Authorization': token , 'Content-Type': 'application/json' });
+
+  //   return this.http.post(`${this.baseUrl}/admin/user/change/trx/password`, body, { headers, observe: 'response' })
+  //     .pipe(
+  //       catchError(this.handleError) // Handle error gracefully
+  //     );
+  // }
+  changeLoginPassword(body: any,  token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', token);
 
-    return this.http.put(`${this.baseUrl}/admin/auth/change/password`, body, { headers, observe: 'response' })
+    return this.http.put(`${this.baseUrl}/admin/user/change/login/password`, body, { headers, observe: 'response' })
       .pipe(
         catchError(this.handleError) // Handle error gracefully
       );
