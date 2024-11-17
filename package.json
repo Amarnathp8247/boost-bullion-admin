@@ -26,6 +26,7 @@
     "@angular/router": "^16.0.0",
     "crypto-js": "^4.2.0",
     "jquery": "^3.7.1",
+    "ng2-search-filter": "^0.5.1",
     "ngx-toastr": "^19.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.12",

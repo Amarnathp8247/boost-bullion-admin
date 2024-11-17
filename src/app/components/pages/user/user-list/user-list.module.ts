@@ -9,6 +9,7 @@ import { UserUpdateComponent } from '../user-update/user-update.component';
 import { UserKycComponent } from '../user-kyc/user-kyc.component';
 import { TeamTransferComponent } from '../team-transfer/team-transfer.component';
 import { TreeModule } from 'primeng/tree';
+import { SearchPipe } from 'src/app/search.pipe';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { TreeModule } from 'primeng/tree';
     UserUpdateComponent,
     UserKycComponent,
     TeamTransferComponent,
+    SearchPipe
   ],
   imports: [
     CommonModule,
@@ -24,8 +26,11 @@ import { TreeModule } from 'primeng/tree';
     MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
-    TreeModule
+    TreeModule,
+    
    
-  ]
+  ],
+  exports: [SearchPipe],
+ 
 })
 export class UserListModule { }

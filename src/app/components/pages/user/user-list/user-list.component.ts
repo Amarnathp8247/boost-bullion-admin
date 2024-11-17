@@ -1,16 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TransactionServicesService } from '../../../../services/transaction/transaction-services.service';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { UserServicesService } from 'src/app/services/user-services/user-services.service';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import { SearchPipe } from 'src/app/search.pipe';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
+  providers: [SearchPipe]
 })
 export class UserListComponent {
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   transactions: any[] = [];
   error: string | null = null;
   token: any;
@@ -21,13 +23,17 @@ export class UserListComponent {
   currentPage: number = 1;
   filteredTransactions: any[] = []; // Store filtered transactions
   // Filter properties
+  pagelength: any;
   transactionType: string = '';
   status: string = '';
   startDate: string = '';
   endDate: string = '';
   secretKey = '123456789';
+  filteredReferrals: any[] = [];
+  public itemPerPage: number = 10;
+  searchTerm: string = '';
 
-  constructor(private UserServicesServices: UserServicesService, private router: Router) { }
+  constructor(private UserServicesServices: UserServicesService, private router: Router ,public searchFilterPipe: SearchPipe) { }
 
   ngOnInit(): void {
     this.token = localStorage.getItem('authToken');
@@ -71,6 +77,15 @@ export class UserListComponent {
     });
   }
 
+  async filterReferrals() {
+    this.filteredReferrals = await this.searchFilterPipe.transform(this.transactions, this.searchTerm);
+    this.currentPage = 1;
+    let toPage = this.itemPerPage * this.currentPage;
+    let fromPage = toPage - this.itemPerPage;
+    this.filteredReferrals = this.filteredReferrals.slice(fromPage, toPage);
+    this.paginator.pageIndex = 0;
+  }
+
   getFreeraTree(id: any) {
     // Encrypt the ID
     const encryptedId = CryptoJS.AES.encrypt(id.toString(), this.secretKey).toString();
@@ -110,11 +125,20 @@ export class UserListComponent {
       .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
   }
 
-
-  onPageChange(event: PageEvent): void {
-    this.currentPage = event.pageIndex + 1; // MatPaginator pageIndex starts from 0
-    this.pageSize = event.pageSize;
-    this.userList(this.currentPage, this.pageSize);
+  onPageChange($event: any) {
+    this.currentPage = $event.pageIndex + 1;
+    if (this.itemPerPage !== $event.pageSize) {
+      this.itemPerPage = $event.pageSize;
+    }
+    this.localPagination()
   }
+  localPagination() {
+    let toPage = this.itemPerPage * this.currentPage;
+    let fromPage = toPage - this.itemPerPage;
+    this.filteredReferrals = this.transactions.slice(fromPage, toPage);
+  }
+
+
+  
 }
 

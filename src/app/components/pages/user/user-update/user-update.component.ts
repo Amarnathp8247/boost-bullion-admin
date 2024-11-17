@@ -35,6 +35,8 @@ export class UserUpdateComponent {
   showPassword = false;
   selectedReferral: any
   nodes: any[] = [];
+  profileForm2!:FormGroup
+  searchTerm: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -81,6 +83,27 @@ export class UserUpdateComponent {
       isAvailableForReward: [''],
 
     });
+    this.profileForm2 = this.fb.group({
+      email: [''],
+      mobile: ['',],
+      bonusBalance: [''],
+      totalStakedBalance: [''],
+      totalWithdrawalBalance: [''],
+      totalTeamTurnoverBalance: [''],
+      totalDirectTeamTurnoverBalance: [''],
+      totalRemovedStakedBalance: [''],
+      totalInternalTransferBalance: [''],
+      totalDelegateRewardBalance: [''],
+      totalUnlockRewardBalnce: ['',],
+      totalReferralRewardBalance: [''],
+      totalStakingRewardBalance: [''],
+      totalRankBonusBalance: [''],
+      totalRewardBalance: [''],
+      isTrxPassCreated: [''],
+      airDorpLevel: [''],
+      stakingLevel: [''],
+
+    });
 
     // Retrieve the token and profile info
     this.token = localStorage.getItem('authToken');
@@ -94,6 +117,7 @@ export class UserUpdateComponent {
     // this.router.navigate(['/previous-route']);
   }
 
+  
   getProfileInfo(): void {
     $('.loader').show();
     this.authService.getUserDataWithId(this.token, this.decryptedId).subscribe({
@@ -108,6 +132,28 @@ export class UserUpdateComponent {
           isInternalTransferAllowed: response.data.isInternalTransferAllowed,
           // isReferralAllowed:response.data.isReferralAllowed,
           isAvailableForReward: response.data.isAvailableForReward,
+        });
+        this.profileForm2.patchValue({
+
+          email: response.data.email,
+          mobile: response.data.mobile,
+          bonusBalance: response.data.bonusBalance,
+          totalStakedBalance: response.data.totalStakedBalance,
+          totalWithdrawalBalance: response.data.totalWithdrawalBalance,
+          totalTeamTurnoverBalance: response.data.totalTeamTurnoverBalance,
+          totalDirectTeamTurnoverBalance: response.data.totalDirectTeamTurnoverBalance,
+          totalRemovedStakedBalance: response.data.totalRemovedStakedBalance,
+          totalInternalTransferBalance: response.data.totalInternalTransferBalance,
+          totalDelegateRewardBalance: response.data.totalDelegateRewardBalance,
+          totalUnlockRewardBalnce: response.data.totalUnlockRewardBalnce,
+          totalReferralRewardBalance: response.data.totalReferralRewardBalance,
+          totalStakingRewardBalance: response.data.totalStakingRewardBalance,
+          totalRankBonusBalance: response.data.totalRankBonusBalance,
+          totalRewardBalance: response.data.totalRewardBalance,
+          isTrxPassCreated: response.data.isTrxPassCreated,
+          airDorpLevel: response.data.airDorpLevel,
+          stakingLevel: response.data.stakingLevel,
+         
         });
         this.chnageLoginPassword.patchValue({
           userId: response.data._id,

@@ -7,6 +7,13 @@
         <div class="container">
             <h2>User List</h2>
 
+            <div class="form-group mb-3 w-25">
+                <!-- <input type="text" class="form-control "
+                    style="background-color: aliceblue !important;  color: black;" placeholder="Search "
+                    [(ngModel)]="searchQuery" (ngModelChange)="filterReferrals()" /> -->
+                    <input class="report-search-bttn" type="text" placeholder="Search..." [(ngModel)]="searchTerm" (keyup)="filterReferrals()" />
+            </div>
+
             <!-- Loading and Error Messages -->
             
             <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
@@ -51,25 +58,7 @@
                             <th>Bonus Balance</th>
                             <th>Staked Balance</th>
                             <th>Withdrawal Balance</th>
-                            <th>TeamTurnover Balance</th>
-                            <th>Direct Team Turnover Balance</th>
-                            <th>Removed Staked Balance</th>
-                            <th>Internal Transfer Balance</th>
-                            <th>Delegate Reward Balance</th>
-                            <th>Unlock Reward Balance</th>
-                            <th>Referral Reward Balance</th>
-                            <th>Staking Reward Balance</th>
-                            <th>Rank Bonus Balance</th>
-                            <th>Reward Balance</th>
-                            <th>TrxPassCreated</th>
-                            <th>Email Verified</th>
-                            <th>Mobile Verified</th>
-                            <th>Withdraw Allowed</th>
-                            <th>Staking Allowed</th>
-                            <th>Available ForReward</th>
-                            <th>rank</th>
-                            <th>airDorpLevel</th>
-                            <th>stakingLevel</th>
+                          
                             <th>Action</th>
                             <th>Date</th>
                         </tr>
@@ -85,25 +74,7 @@
                             <td>{{ transaction.bonusBalance }}</td>
                             <td>{{ transaction.totalStakedBalance }}</td>
                             <td>{{ transaction.totalWithdrawalBalance }}</td>
-                            <td>{{ transaction.totalTeamTurnoverBalance }}</td>
-                            <td>{{ transaction.totalDirectTeamTurnoverBalance }}</td>
-                            <td>{{ transaction.totalRemovedStakedBalance }}</td>
-                            <td>{{ transaction.totalInternalTransferBalance }}</td>
-                            <td>{{ transaction.totalDelegateRewardBalance }}</td>
-                            <td>{{ transaction.totalUnlockRewardBalnce }}</td>
-                            <td>{{ transaction.totalReferralRewardBalance }}</td>
-                            <td>{{ transaction.totalStakingRewardBalance }}</td>
-                            <td>{{ transaction.totalRankBonusBalance }}</td>
-                            <td>{{ transaction.totalRewardBalance }}</td>
-                            <td>{{ transaction.isTrxPassCreated }}</td>
-                            <td>{{ transaction.isEmailVerified }}</td>
-                            <td>{{ transaction.isMobileVerified }}</td>
-                            <td>{{ transaction.isWithdrawAllowed }}</td>
-                            <td>{{ transaction.isStakingAllowed }}</td>
-                            <td>{{ transaction.isAvailableForReward }}</td> 
-                            <td>{{ transaction.rank }}</td>
-                            <td>{{ transaction.airDorpLevel }}</td>
-                            <td>{{ transaction.stakingLevel }}</td>
+                           
                             <td (click)="updateUser(transaction._id)" class="cursor-pointer"> <i class="fa fa-pencil-alt"></i></td>
                             <td>{{ transaction.createdAt | date: 'medium' }}</td>
                         </tr>
@@ -114,9 +85,9 @@
             <div *ngIf=" transactions.length === 0">No transactions available.</div>
 
             <!-- Paginator -->
-            <mat-paginator class="pagination" [length]="totalTransactions" [pageSize]="10"
-                [pageSizeOptions]="[5, 10, 25]" (page)="onPageChange($event)">
-            </mat-paginator>
+            <mat-paginator #paginator [length]="pagelength" [pageSize]="itemPerPage" showFirstLastButtons="true"
+            aria-label="Select page" [pageSizeOptions]="[10, 25, 50]" (page)="onPageChange($event)" class="pagination" >
+          </mat-paginator>
         </div>
     </div>
 </div>
