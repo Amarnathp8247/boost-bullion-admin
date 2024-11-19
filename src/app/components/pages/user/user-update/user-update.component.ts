@@ -7,6 +7,8 @@ import * as CryptoJS from 'crypto-js';
 import { UserServicesService } from 'src/app/services/user-services/user-services.service';
 import { TreeNode } from 'primeng/api'; // Import TreeNode from PrimeNG
 import { Location } from '@angular/common';
+import { TransactionServicesService } from 'src/app/services/transaction/transaction-services.service';
+import { PageEvent } from '@angular/material/paginator';
 interface TreCustomTreeNode extends TreeNode {
   label: string;
   referralCode?: string;  // Add referralCode property to the node
@@ -19,7 +21,7 @@ interface TreCustomTreeNode extends TreeNode {
   styleUrls: ['./user-update.component.scss']
 })
 export class UserUpdateComponent {
-
+  error: string | null = null;
   activeSection: string = 'profile'; // Default section
   profileForm!: FormGroup;
   secretKey = '123456789';
@@ -37,13 +39,19 @@ export class UserUpdateComponent {
   nodes: any[] = [];
   profileForm2!:FormGroup
   searchTerm: string = '';
-
+  transactions:any = []
+  totalCredited: number = 0;
+  totalDebited: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 1;
+  totalTransactions: number = 0; // total transactions for paginator
   constructor(
     private fb: FormBuilder,
     private authService: UserServicesService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private transactionService: TransactionServicesService
   ) {
 
     this.changeTraxPassword = this.fb.group({
@@ -85,6 +93,7 @@ export class UserUpdateComponent {
     });
     this.profileForm2 = this.fb.group({
       email: [''],
+      BUSDBalance: [''],
       mobile: ['',],
       bonusBalance: [''],
       totalStakedBalance: [''],
@@ -109,6 +118,7 @@ export class UserUpdateComponent {
     this.token = localStorage.getItem('authToken');
     this.getProfileInfo();
     this.getRefrralTreeData()
+    this.fetchTransactions()
   }
 
   goBack(): void {
@@ -134,7 +144,7 @@ export class UserUpdateComponent {
           isAvailableForReward: response.data.isAvailableForReward,
         });
         this.profileForm2.patchValue({
-
+          BUSDBalance: response.data.BUSDBalance,
           email: response.data.email,
           mobile: response.data.mobile,
           bonusBalance: response.data.bonusBalance,
@@ -310,7 +320,7 @@ export class UserUpdateComponent {
 
 
   onNodeSelect(event: any): void {
-    console.log("Node clicked:", event);  // Access the node data using event.node
+   
 
     const node = event.node;  // Get the clicked node from event.node
     if (node) {
@@ -335,6 +345,40 @@ export class UserUpdateComponent {
         this.toastr.error('Failed to retrieve referral data');
       }
     });
+  }
+
+
+  fetchTransactions(): void {
+    $('.loader').show();
+   
+    this.transactionService.getTransactionsById(this.decryptedId,this.token).subscribe({
+      next: (response: any) => {
+        this.transactions = response.data.docs;
+        this.calculateTotals(); // Calculate totals when transactions are fetched
+        $('.loader').hide();
+      },
+      error: (err) => {
+        this.error = 'Failed to load transactions';
+        $('.loader').hide();
+      }
+    });
+  }
+
+  calculateTotals(): void {
+    this.totalCredited = this.transactions
+      .filter((transaction: { amount: number; }) => transaction.amount > 0)
+      .reduce((sum: any, transaction: { amount: any; }) => sum + transaction.amount, 0);
+
+    this.totalDebited = this.transactions
+      .filter((transaction: { amount: number; }) => transaction.amount < 0)
+      .reduce((sum: number, transaction: { amount: number; }) => sum + Math.abs(transaction.amount), 0);
+  }
+
+
+  onPageChange(event: PageEvent): void {
+    this.currentPage = event.pageIndex + 1; // MatPaginator pageIndex starts from 0
+    this.pageSize = event.pageSize;
+    this.fetchTransactions();
   }
 
 }

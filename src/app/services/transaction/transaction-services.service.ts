@@ -28,6 +28,17 @@ export class TransactionServicesService {
 }
 
 
+getTransactionsById( id: any, token: any): Observable<any> {
+
+
+  const headers = new HttpHeaders({
+    Authorization: token,
+  });
+
+  return this.http.get<any>(`${this.baseUrl}/admin/transaction/${id}`, { headers });
+}
+
+
 
 
 

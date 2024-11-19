@@ -21,6 +21,9 @@
                 <button class="btn btn-success mx-2" (click)="setActiveSection('referral-tree')">
                     Reffral Tree
                 </button>
+                <button class="btn btn-success mx-2" (click)="setActiveSection('Transaction_history')">
+                   Transaction History
+                </button>
             </div>
 
 
@@ -31,6 +34,21 @@
                             <h2 class="card-title text-center mb-0">Profile</h2>
                         </div>
                         <div class="card-body">
+
+                            <form [formGroup]="profileForm2" (ngSubmit)="updateProfile()">
+                                <!-- Email -->
+                                <div class="form-group mb-3">
+                                    <label for="email">Email:</label>
+                                    <input type="text" id="email" class="form-control" formControlName="email" />
+                                </div>
+
+                                <!-- Mobile -->
+                                <div class="form-group mb-3">
+                                    <label for="mobile">Mobile:</label>
+                                    <input type="text" id="mobile" class="form-control" formControlName="mobile" />
+                                </div>
+
+                            </form>
                             <!-- Profile Form -->
                             <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
                                 <!-- User ID -->
@@ -38,13 +56,13 @@
                                     <label for="userId">User ID:</label>
                                     <input type="text" id="userId" class="form-control" formControlName="userId" />
                                 </div>
-            
+
                                 <!-- Full Name -->
                                 <div class="form-group mb-3">
                                     <label for="name">Name:</label>
                                     <input type="text" id="name" class="form-control" formControlName="name" />
                                 </div>
-            
+
                                 <!-- Email Verified -->
                                 <div class="form-group mb-3">
                                     <label for="isEmailVerified">Email Verified:</label>
@@ -53,61 +71,67 @@
                                         <option value="false">False</option>
                                     </select>
                                 </div>
-            
+
                                 <!-- Mobile Verified -->
                                 <div class="form-group mb-3">
                                     <label for="isMobileVerified">Mobile Verified:</label>
-                                    <select id="isMobileVerified" class="form-select" formControlName="isMobileVerified">
+                                    <select id="isMobileVerified" class="form-select"
+                                        formControlName="isMobileVerified">
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
                                 </div>
-            
+
                                 <!-- Withdraw Allowed -->
                                 <div class="form-group mb-3">
                                     <label for="isWithdrawAllowed">Withdraw Allowed:</label>
-                                    <select id="isWithdrawAllowed" class="form-select" formControlName="isWithdrawAllowed">
+                                    <select id="isWithdrawAllowed" class="form-select"
+                                        formControlName="isWithdrawAllowed">
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
                                 </div>
-            
+
                                 <!-- Staking Allowed -->
                                 <div class="form-group mb-3">
                                     <label for="isStakingAllowed">Staking Allowed:</label>
-                                    <select id="isStakingAllowed" class="form-select" formControlName="isStakingAllowed">
+                                    <select id="isStakingAllowed" class="form-select"
+                                        formControlName="isStakingAllowed">
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
                                 </div>
-            
+
                                 <!-- Internal Transfer Allowed -->
                                 <div class="form-group mb-3">
                                     <label for="isInternalTransferAllowed">Internal Transfer Allowed:</label>
-                                    <select id="isInternalTransferAllowed" class="form-select" formControlName="isInternalTransferAllowed">
+                                    <select id="isInternalTransferAllowed" class="form-select"
+                                        formControlName="isInternalTransferAllowed">
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
                                 </div>
-            
+
                                 <!-- Available for Reward -->
                                 <div class="form-group mb-3">
                                     <label for="isAvailableForReward">Available for Reward:</label>
-                                    <select id="isAvailableForReward" class="form-select" formControlName="isAvailableForReward">
+                                    <select id="isAvailableForReward" class="form-select"
+                                        formControlName="isAvailableForReward">
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
                                 </div>
-            
+
                                 <!-- Submit Button -->
-                                <button type="submit" class="btn btn-primary btn-block" [disabled]="profileForm.invalid">
+                                <button type="submit" class="btn btn-primary btn-block"
+                                    [disabled]="profileForm.invalid">
                                     Update Profile
                                 </button>
                             </form>
                         </div>
                     </div>
                 </div>
-                 <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="col-lg-6 col-md-8 col-sm-10">
                     <div class="card shadow-sm mt-5">
                         <div class="card-header text-white">
                             <h2 class="card-title text-center mb-0">Profile</h2>
@@ -115,125 +139,139 @@
                         <div class="card-body">
                             <!-- Profile Form -->
                             <form [formGroup]="profileForm2" (ngSubmit)="updateProfile()">
-                                <!-- Email -->
+                                <!-- Balnce -->
                                 <div class="form-group mb-3">
-                                    <label for="email">Email:</label>
-                                    <input type="text" id="email" class="form-control" formControlName="email" />
+                                    <label for="email">Balance:</label>
+                                    <input type="text" id="email" class="form-control" formControlName="BUSDBalance" />
                                 </div>
-                            
-                                <!-- Mobile -->
+
+                                <!-- Total Internal Transfer Balance -->
                                 <div class="form-group mb-3">
-                                    <label for="mobile">Mobile:</label>
-                                    <input type="text" id="mobile" class="form-control" formControlName="mobile" />
+                                    <label for="totalInternalTransferBalance">Trade Wallet Balance:</label>
+                                    <input type="text" id="totalInternalTransferBalance" class="form-control"
+                                        formControlName="totalInternalTransferBalance" />
                                 </div>
-                            
+
+
                                 <!-- Bonus Balance -->
                                 <div class="form-group mb-3">
                                     <label for="bonusBalance">Bonus Balance:</label>
-                                    <input type="text" id="bonusBalance" class="form-control" formControlName="bonusBalance" />
+                                    <input type="text" id="bonusBalance" class="form-control"
+                                        formControlName="bonusBalance" />
                                 </div>
-                            
+
                                 <!-- Total Staked Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalStakedBalance">Total Staked Balance:</label>
-                                    <input type="text" id="totalStakedBalance" class="form-control" formControlName="totalStakedBalance" />
+                                    <input type="text" id="totalStakedBalance" class="form-control"
+                                        formControlName="totalStakedBalance" />
                                 </div>
-                            
+
                                 <!-- Total Withdrawal Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalWithdrawalBalance">Total Withdrawal Balance:</label>
-                                    <input type="text" id="totalWithdrawalBalance" class="form-control" formControlName="totalWithdrawalBalance" />
+                                    <input type="text" id="totalWithdrawalBalance" class="form-control"
+                                        formControlName="totalWithdrawalBalance" />
                                 </div>
-                            
+
                                 <!-- Total Team Turnover Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalTeamTurnoverBalance">Total Team Turnover Balance:</label>
-                                    <input type="text" id="totalTeamTurnoverBalance" class="form-control" formControlName="totalTeamTurnoverBalance" />
+                                    <input type="text" id="totalTeamTurnoverBalance" class="form-control"
+                                        formControlName="totalTeamTurnoverBalance" />
                                 </div>
-                            
+
                                 <!-- Total Direct Team Turnover Balance -->
                                 <div class="form-group mb-3">
-                                    <label for="totalDirectTeamTurnoverBalance">Total Direct Team Turnover Balance:</label>
-                                    <input type="text" id="totalDirectTeamTurnoverBalance" class="form-control" formControlName="totalDirectTeamTurnoverBalance" />
+                                    <label for="totalDirectTeamTurnoverBalance">Total Direct Team Turnover
+                                        Balance:</label>
+                                    <input type="text" id="totalDirectTeamTurnoverBalance" class="form-control"
+                                        formControlName="totalDirectTeamTurnoverBalance" />
                                 </div>
-                            
+
                                 <!-- Total Removed Staked Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalRemovedStakedBalance">Total Removed Staked Balance:</label>
-                                    <input type="text" id="totalRemovedStakedBalance" class="form-control" formControlName="totalRemovedStakedBalance" />
+                                    <input type="text" id="totalRemovedStakedBalance" class="form-control"
+                                        formControlName="totalRemovedStakedBalance" />
                                 </div>
-                            
-                                <!-- Total Internal Transfer Balance -->
-                                <div class="form-group mb-3">
-                                    <label for="totalInternalTransferBalance">Total Internal Transfer Balance:</label>
-                                    <input type="text" id="totalInternalTransferBalance" class="form-control" formControlName="totalInternalTransferBalance" />
-                                </div>
-                            
+
+
+
                                 <!-- Total Delegate Reward Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalDelegateRewardBalance">Total Delegate Reward Balance:</label>
-                                    <input type="text" id="totalDelegateRewardBalance" class="form-control" formControlName="totalDelegateRewardBalance" />
+                                    <input type="text" id="totalDelegateRewardBalance" class="form-control"
+                                        formControlName="totalDelegateRewardBalance" />
                                 </div>
-                            
+
                                 <!-- Total Unlock Reward Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalUnlockRewardBalnce">Total Unlock Reward Balance:</label>
-                                    <input type="text" id="totalUnlockRewardBalnce" class="form-control" formControlName="totalUnlockRewardBalnce" />
+                                    <input type="text" id="totalUnlockRewardBalnce" class="form-control"
+                                        formControlName="totalUnlockRewardBalnce" />
                                 </div>
-                            
+
                                 <!-- Total Referral Reward Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalReferralRewardBalance">Total Referral Reward Balance:</label>
-                                    <input type="text" id="totalReferralRewardBalance" class="form-control" formControlName="totalReferralRewardBalance" />
+                                    <input type="text" id="totalReferralRewardBalance" class="form-control"
+                                        formControlName="totalReferralRewardBalance" />
                                 </div>
-                            
+
                                 <!-- Total Staking Reward Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalStakingRewardBalance">Total Staking Reward Balance:</label>
-                                    <input type="text" id="totalStakingRewardBalance" class="form-control" formControlName="totalStakingRewardBalance" />
+                                    <input type="text" id="totalStakingRewardBalance" class="form-control"
+                                        formControlName="totalStakingRewardBalance" />
                                 </div>
-                            
+
                                 <!-- Total Rank Bonus Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalRankBonusBalance">Total Rank Bonus Balance:</label>
-                                    <input type="text" id="totalRankBonusBalance" class="form-control" formControlName="totalRankBonusBalance" />
+                                    <input type="text" id="totalRankBonusBalance" class="form-control"
+                                        formControlName="totalRankBonusBalance" />
                                 </div>
-                            
+
                                 <!-- Total Reward Balance -->
                                 <div class="form-group mb-3">
                                     <label for="totalRewardBalance">Total Reward Balance:</label>
-                                    <input type="text" id="totalRewardBalance" class="form-control" formControlName="totalRewardBalance" />
+                                    <input type="text" id="totalRewardBalance" class="form-control"
+                                        formControlName="totalRewardBalance" />
                                 </div>
-                            
+
                                 <!-- Is TRX Pass Created -->
                                 <div class="form-group mb-3">
                                     <label for="isTrxPassCreated">Is TRX Pass Created:</label>
-                                    <select id="isTrxPassCreated" class="form-select" formControlName="isTrxPassCreated">
+                                    <select id="isTrxPassCreated" class="form-select"
+                                        formControlName="isTrxPassCreated">
                                         <option value="true">True</option>
                                         <option value="false">False</option>
                                     </select>
                                 </div>
-                            
+
                                 <!-- AirDrop Level -->
                                 <div class="form-group mb-3">
                                     <label for="airDorpLevel">AirDrop Level:</label>
-                                    <input type="text" id="airDorpLevel" class="form-control" formControlName="airDorpLevel" />
+                                    <input type="text" id="airDorpLevel" class="form-control"
+                                        formControlName="airDorpLevel" />
                                 </div>
-                            
+
                                 <!-- Staking Level -->
                                 <div class="form-group mb-3">
                                     <label for="stakingLevel">Staking Level:</label>
-                                    <input type="text" id="stakingLevel" class="form-control" formControlName="stakingLevel" />
+                                    <input type="text" id="stakingLevel" class="form-control"
+                                        formControlName="stakingLevel" />
                                 </div>
-                            
-                               
+
+
                             </form>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
-            
+
 
             <div class="row justify-content-center" *ngIf="activeSection === 'changePassword'">
                 <!-- Change Transaction Password -->
@@ -246,9 +284,9 @@
                             <div class="form-group mb-3">
                                 <label for="prevPassword">Previous Password:</label>
                                 <div class="input-group">
-                                    <input type="text" id="prevPassword"
-                                        class="form-control" formControlName="userId" required />
-                                  
+                                    <input type="text" id="prevPassword" class="form-control" formControlName="userId"
+                                        required />
+
                                 </div>
                             </div>
                             <div class="form-group mb-3">
@@ -264,7 +302,7 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <button type="submit" class="btn btn-warning btn-block"
                                 [disabled]="chnageLoginPassword.invalid">
                                 Change Password
@@ -285,9 +323,9 @@
                             <div class="form-group mb-3">
                                 <label for="password">Password:</label>
                                 <div class="input-group">
-                                    <input type="text" id="password"
-                                        class="form-control" formControlName="userId" required />
-                                   
+                                    <input type="text" id="password" class="form-control" formControlName="userId"
+                                        required />
+
                                 </div>
                             </div>
                             <div class="form-group mb-3">
@@ -361,6 +399,58 @@
 
                         </div>
 
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center" *ngIf="activeSection === 'Transaction_history'">
+               
+
+                <div class="col-md-12 col-sm-10">
+                    <!-- Referral Tree Table -->
+                    <div class="mt-4">
+                        <!-- Transactions Table -->
+                        <div class="table-responsive">
+                            <table class="table-data mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>S.no</th>
+                                        <th>Transaction Type</th>
+                                        <th>Credited Amount</th>
+                                        <th>Debited Amount</th>
+                                        <th>Current Balance</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let transaction of transactions; let i = index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ transaction.transactionType }}</td>
+                                        <td>
+                                            <span *ngIf="transaction.amount > 0">{{ transaction.amount ?
+                                                transaction.amount : '-' }}</span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="transaction.amount < 0">{{ transaction.amount ?
+                                                transaction.amount : '-' }}</span>
+                                        </td>
+                                        <td>{{ transaction.currentBalance }}</td>
+                                        <td>{{ transaction.description }}</td>
+                                        <td>{{ transaction.status }}</td>
+                                        <td>{{ transaction.createdAt | date: 'medium' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div *ngIf=" transactions.length === 0">No transactions available.</div>
+
+                        <!-- Paginator -->
+                        <mat-paginator class="pagination" [length]="totalTransactions" [pageSize]="10"
+                            [pageSizeOptions]="[5, 10, 25]" (page)="onPageChange($event)">
+                        </mat-paginator>
                     </div>
                 </div>
             </div>
