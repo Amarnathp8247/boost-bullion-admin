@@ -2,12 +2,11 @@
 
 <div class="wrapper">
   <!-- Page Content -->
-  <div id="content">
+  <div id="content" class="active-content">
     <div class="container">
       <h2>Transaction History</h2>
 
       <!-- Loading and Error Messages -->
-      <div >Loading transactions...</div>
       <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
       <!-- Filter Section -->
@@ -39,7 +38,7 @@
 
       <!-- Transactions Table -->
       <div class="table-responsive">
-        <table class="table-data mt-4">
+        <table class="table-data">
           <thead>
             <tr>
               <th>S.no</th>
@@ -54,7 +53,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let transaction of transactions; let i = index">
-              <td>{{ i + 1 }}</td>
+              <td>{{ (currentPage - 1) * pageSize + (i + 1) }}</td>
               <td>{{ transaction.transactionType }}</td>
               <td>
                 <span *ngIf="transaction.amount > 0">{{ transaction.amount ? transaction.amount : '-' }}</span>

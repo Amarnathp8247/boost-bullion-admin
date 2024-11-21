@@ -100,4 +100,11 @@ export class UserServicesService {
     console.error('An error occurred:', error);
     return throwError(error);
   }
+
+  toggleLoader(show: boolean) {
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.style.display = show ? 'flex' : 'none';
+    }
+  }
 }

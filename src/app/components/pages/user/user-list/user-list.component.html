@@ -3,18 +3,16 @@
 
 <div class="wrapper">
     <!-- Page Content -->
-    <div id="content">
+    <div id="content" class="active-content" style="margin-top: 2rem;">
         <div class="container">
             <h2>User List</h2>
 
             <div class="filter-container">
                 <label for="search">Search:</label>
                 <input id="search" type="text" class="form-control" [(ngModel)]="filter.search" (input)="applyFilters()" placeholder="Enter search term" />
-              
-               
             <!-- Loading and Error Messages -->
             
-            <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+            <!-- <div *ngIf="error" class="alert alert-danger">{{ error }}</div> -->
 
             <!-- Filter Section -->
             <!-- <div class="filter-section mb-4">
@@ -56,14 +54,13 @@
                             <th>Bonus Balance</th>
                             <th>Staked Balance</th>
                             <th>Withdrawal Balance</th>
-                          
                             <th>Action</th>
                             <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let transaction of transactions; let i = index">
-                            <td>{{ i + 1 }}</td>
+                            <td>{{ (currentPage - 1) * pageSize + (i + 1) }}</td>
                             <td>{{ transaction.referralCode }}</td>
                             <td>{{transaction.loginId}}</td>
                             <td>{{ transaction.name }}</td>
@@ -72,7 +69,6 @@
                             <td>{{ transaction.bonusBalance }}</td>
                             <td>{{ transaction.totalStakedBalance }}</td>
                             <td>{{ transaction.totalWithdrawalBalance }}</td>
-                           
                             <td (click)="updateUser(transaction._id)" class="cursor-pointer"> <i class="fa fa-pencil-alt"></i></td>
                             <td>{{ transaction.createdAt | date: 'medium' }}</td>
                         </tr>

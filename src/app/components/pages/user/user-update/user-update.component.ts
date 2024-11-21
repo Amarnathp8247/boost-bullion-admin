@@ -128,7 +128,7 @@ export class UserUpdateComponent {
 
   
   getProfileInfo(): void {
-    $('.loader').show();
+    
     this.authService.getUserDataWithId(this.token, this.decryptedId).subscribe({
       next: (response) => {
         this.profileForm.patchValue({
@@ -172,11 +172,11 @@ export class UserUpdateComponent {
           userId: response.data._id,
 
         })
-        $('.loader').hide();
+        
       },
       error: (error) => {
         this.toastr.error('Failed to load profile information', 'Error');
-        $('.loader').hide();
+        
       }
     });
   }
@@ -189,7 +189,7 @@ export class UserUpdateComponent {
   updateProfile(): void {
     if (this.profileForm.valid) {
       // Show loader
-      $('.loader').show();
+      
   
       // Extract only the necessary fields
       const updatedData = this.profileForm.value;
@@ -200,12 +200,12 @@ export class UserUpdateComponent {
       this.authService.updateProfile( updatedData ,this.token, ).subscribe({
         next: (response) => {
           this.toastr.success('Profile updated successfully!', 'Success');
-          $('.loader').hide();
+          
         },
         error: (error) => {
           console.error('Profile update error:', error);
           this.toastr.error('Failed to update profile. Please try again later.', 'Error');
-          $('.loader').hide();
+          
         },
         complete: () => {
           // Additional actions if needed after the request is complete
@@ -348,17 +348,17 @@ export class UserUpdateComponent {
 
 
   fetchTransactions(): void {
-    $('.loader').show();
+    
    
     this.transactionService.getTransactionsById(this.decryptedId,this.token).subscribe({
       next: (response: any) => {
         this.transactions = response.data.docs;
         this.calculateTotals(); // Calculate totals when transactions are fetched
-        $('.loader').hide();
+        
       },
       error: (err) => {
+        this.transactions=[]
         this.error = 'Failed to load transactions';
-        $('.loader').hide();
       }
     });
   }

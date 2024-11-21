@@ -5,12 +5,14 @@ import { UserServicesService } from 'src/app/services/user-services/user-service
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { SearchPipe } from 'src/app/search.pipe';
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
   providers: [SearchPipe]
 })
+
 export class UserListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   transactions: any[] = [];
@@ -57,15 +59,12 @@ export class UserListComponent {
     this.token = localStorage.getItem('authToken');
     this.userList(this.currentPage, this.pageSize);
   }
-  // Add types for params
-  userList(page: number, size: number): void {
-    $('.loader').show();
 
+  userList(page: number, size: number): void {
     const params: Record<string, string> = {
       page: page.toString(),
       sizePerPage: size.toString(),
     };
-
     // Add only the search filter if it's active
     if (this.filter.search) {
       params['search'] = this.filter.search;
@@ -76,17 +75,18 @@ export class UserListComponent {
         }
       });
     }
-
+    this.UserServicesServices.toggleLoader(true);
     this.UserServicesServices.getUserList(page, size, this.token!, params).subscribe({
       next: (response: any) => {
         this.transactions = response.data.docs;
         this.filteredTransactions = [...this.transactions];
         this.totalTransactions = response.data.totalDocs;
-        $('.loader').hide();
+        this.UserServicesServices.toggleLoader(false);
       },
       error: () => {
+        this.transactions=[]
         this.error = 'Failed to load transactions';
-        $('.loader').hide();
+        this.UserServicesServices.toggleLoader(false);
       }
     });
   }
@@ -94,7 +94,6 @@ export class UserListComponent {
   applyFilters(): void {
     // Check if only the search filter is applied
     this.isFiltering = Object.keys(this.filter).some((key) => key === 'search' && this.filter[key] !== '');
-
     const page = 1; // Reset to the first page when applying filters
     const size = 20; // Example page size
     this.userList(page, size);
@@ -123,35 +122,20 @@ export class UserListComponent {
   }
 
   getFreeraTree(id: any) {
-    // Encrypt the ID
     const encryptedId = CryptoJS.AES.encrypt(id.toString(), this.secretKey).toString();
-
-    // Navigate to the next component with the encrypted ID
     this.router.navigate(['/reffral-tree'], { queryParams: { id: encryptedId } });
-
-
   }
 
   updateUser(id: any) {
-    // Encrypt the ID
     const encryptedId = CryptoJS.AES.encrypt(id.toString(), this.secretKey).toString();
-
-    // Navigate to the next component with the encrypted ID
     this.router.navigate(['/update-user'], { queryParams: { id: encryptedId } });
-
-
   }
 
-
-
-
-
   onPageChange(event: PageEvent): void {
-    this.currentPage = event.pageIndex + 1; // MatPaginator pageIndex starts from 0
+    this.currentPage = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     this.userList(this.currentPage, this.pageSize);
   }
-
 
 }
 

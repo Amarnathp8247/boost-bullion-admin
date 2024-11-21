@@ -109,4 +109,11 @@ export class AuthServicesService {
   getLatestForexLatest(): Observable<any> {
     return this.http.get(this.apiurslss);
   }
+  
+  toggleLoader(show: boolean) {
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.style.display = show ? 'flex' : 'none';
+    }
+  }
 }

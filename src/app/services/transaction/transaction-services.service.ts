@@ -38,8 +38,11 @@ getTransactionsById( id: any, token: any): Observable<any> {
   return this.http.get<any>(`${this.baseUrl}/admin/transaction/${id}`, { headers });
 }
 
-
-
-
+toggleLoader(show: boolean) {
+  const loader = document.getElementById('loader');
+  if (loader) {
+    loader.style.display = show ? 'flex' : 'none';
+  }
+}
 
 }

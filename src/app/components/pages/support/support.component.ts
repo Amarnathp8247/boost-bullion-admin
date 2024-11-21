@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthServicesService } from 'src/app/services/auth/auth-services.service';
 
 @Component({
   selector: 'app-support',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./support.component.scss']
 })
 export class SupportComponent {
-
+  constructor(private authServices: AuthServicesService){}
+  
+  ngOnInit() {
+    this.authServices.toggleLoader(false);
+  }
 }
