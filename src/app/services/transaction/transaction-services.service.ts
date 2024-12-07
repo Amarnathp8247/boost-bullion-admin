@@ -35,7 +35,7 @@ getTransactionsById( id: any, token: any): Observable<any> {
     Authorization: token,
   });
 
-  return this.http.get<any>(`${this.baseUrl}/admin/transaction/${id}`, { headers });
+  return this.http.get<any>(`${this.baseUrl}/admin/transaction/?page=1&sizePerPage=10&userId=${id}`, { headers });
 }
 
 toggleLoader(show: boolean) {
