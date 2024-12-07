@@ -44,6 +44,7 @@
               <th>S.no</th>
               <th>Transaction Type</th>
               <th>Credited Amount</th>
+              <th>LoginId</th>
               <th>Debited Amount</th>
               <th>Current Balance</th>
               <th>Description</th>
@@ -61,6 +62,7 @@
               <td>
                 <span *ngIf="transaction.amount < 0">{{ transaction.amount ? transaction.amount : '-' }}</span>
               </td>
+              <td>{{ transaction.loginId }}</td>
               <td>{{ transaction.currentBalance }}</td>
               <td>{{ transaction.description }}</td>
               <td>{{ transaction.status }}</td>
