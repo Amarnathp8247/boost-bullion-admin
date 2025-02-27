@@ -17,8 +17,19 @@
             <select id="transactionType" class="form-control" [(ngModel)]="transactionType"
               (ngModelChange)="applyFilters()">
               <option value="">All</option>
-              <option value="FUND-TRANSFER">Fund Transfer</option>
-              <option value="BOND-IN">Bond In</option>
+              <option value="BURN">BURN</option>
+              <option value="DEPOSIT">DEPOSIT</option>
+              <option value="BOND-IN">BOND-IN</option>
+              <option value="WITHDRAW">WITHDRAW</option>
+              <option value="FUND-TRANSFER">FUND-TRANSFER</option>
+              <option value="CONVERT-REWARD">CONVERT-REWARD</option>
+              <option value="BOND-REWARD">BOND-REWARD</option>
+              <option value="SIGNUP-BONUS">SIGNUP-BONUS</option>
+              <option value="LEVEL-AIR-DROP">LEVEL-AIR-DROP</option>
+              <option value="REFER-INCOME">REFER-INCOME</option>
+              <option value="RANK-UPGRADE-BONUS">RANK-UPGRADE-BONUS</option>
+              <option value="DELEGATED-REWARD">DELEGATED-REWARD</option>
+              <option value="SWAP-BUSD-TO-TRADE">SWAP-BUSD-TO-TRADE</option>
             </select>
           </div>
           <div class="form-group col-md-4">
@@ -43,8 +54,10 @@
             <tr>
               <th>S.no</th>
               <th>Transaction Type</th>
-              <th>Credited Amount</th>
               <th>LoginId</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Credited Amount</th>
               <th>Debited Amount</th>
               <th>Current Balance</th>
               <th>Description</th>
@@ -56,13 +69,15 @@
             <tr *ngFor="let transaction of transactions; let i = index">
               <td>{{ (currentPage - 1) * pageSize + (i + 1) }}</td>
               <td>{{ transaction.transactionType }}</td>
+              <td>{{ transaction.user.loginId ?  transaction.user.loginId : '-' }}</td>
+              <td>{{ transaction.user.name ?  transaction.user.name : '-' }}</td>
+              <td>{{ transaction.user.email ?  transaction.user.email : '-' }}</td>
               <td>
                 <span *ngIf="transaction.amount > 0">{{ transaction.amount ? transaction.amount : '-' }}</span>
               </td>
               <td>
                 <span *ngIf="transaction.amount < 0">{{ transaction.amount ? transaction.amount : '-' }}</span>
               </td>
-              <td>{{ transaction.loginId }}</td>
               <td>{{ transaction.currentBalance }}</td>
               <td>{{ transaction.description }}</td>
               <td>{{ transaction.status }}</td>

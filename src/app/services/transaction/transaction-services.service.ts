@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment.staging';
 export class TransactionServicesService {
   private baseUrl = `${environment.apiUrl}`; // Adjust to your API endpoint
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // getTransactions(page: number, size: number , token:any): Observable<any[]> {
   //   const headers = new HttpHeaders({
@@ -25,24 +25,24 @@ export class TransactionServicesService {
     const headers = new HttpHeaders().set('Authorization', token);
 
     return this.http.get<any>(`${this.baseUrl}/admin/transaction/list`, { headers, params });
-}
-
-
-getTransactionsById( id: any, token: any): Observable<any> {
-
-
-  const headers = new HttpHeaders({
-    Authorization: token,
-  });
-
-  return this.http.get<any>(`${this.baseUrl}/admin/transaction/?page=1&sizePerPage=10&userId=${id}`, { headers });
-}
-
-toggleLoader(show: boolean) {
-  const loader = document.getElementById('loader');
-  if (loader) {
-    loader.style.display = show ? 'flex' : 'none';
   }
-}
+
+
+  getTransactionsById( token: any , params:any): Observable<any> {
+
+
+    const headers = new HttpHeaders({
+      Authorization: token,
+    });
+
+    return this.http.get<any>(`${this.baseUrl}/admin/transaction/list`, { headers , params });
+  }
+
+  toggleLoader(show: boolean) {
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.style.display = show ? 'flex' : 'none';
+    }
+  }
 
 }

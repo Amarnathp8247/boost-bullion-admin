@@ -22,8 +22,11 @@
                     Reffral Tree
                 </button>
                 <button class="btn btn-success mx-2" (click)="setActiveSection('Transaction_history')">
-                   Transaction History
+                    Transaction History
                 </button>
+                <!-- <button class="btn btn-success mx-2" (click)="setActiveSection('Fund_deposit')">
+                    Fund Deposit
+                </button> -->
             </div>
 
 
@@ -149,7 +152,7 @@
                                 <div class="form-group mb-3">
                                     <label for="totalInternalTransferBalance">Trade Wallet Balance:</label>
                                     <input type="text" id="totalInternalTransferBalance" class="form-control"
-                                        formControlName="totalInternalTransferBalance" />
+                                        formControlName="TRADEBalance" />
                                 </div>
 
 
@@ -383,10 +386,34 @@
                                                 Referral Code:
                                                 <span class="mx-1">{{ selectedReferral.referralCode }}</span>
                                             </li>
-                                            <!-- <li class="list-group-item">
-                                                 Email:
+                                            <li class="list-group-item">
+                                                Sponser Code:
+                                                <span class="mx-1">{{ selectedReferral.sponser }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                LoginId:
+                                                <span class="mx-1">{{ selectedReferral.loginId }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Email:
                                                 <span class="mx-1">{{ selectedReferral.email }}</span>
-                                            </li> -->
+                                            </li>
+                                            <li class="list-group-item">
+                                                Total Reward Balance:
+                                                <span class="mx-1">{{ selectedReferral.totalRewardBalance }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Total Staked Balance:
+                                                <span class="mx-1">{{ selectedReferral.totalStakedBalance }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                            Total Team:
+                                                <span class="mx-1">{{ selectedReferral.totalTeam }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Total Team Turnover Balance:
+                                                <span class="mx-1">{{ selectedReferral.totalTeamTurnoverBalance }}</span>
+                                            </li>
                                             <!-- Add more user details with icons as needed -->
                                         </ul>
                                     </div>
@@ -404,9 +431,48 @@
             </div>
 
             <div class="row justify-content-center" *ngIf="activeSection === 'Transaction_history'">
-               
+
 
                 <div class="col-md-12 col-sm-10">
+
+                    <!-- Filter Section -->
+                    <div class="filter-section mb-4">
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="transactionType">Transaction Type</label>
+                                <select id="transactionType" class="form-control" [(ngModel)]="transactionType"
+                                    (ngModelChange)="applyFilters()">
+                                    <option value="">All</option>
+                                    <option value="BURN">BURN</option>
+                                    <option value="DEPOSIT">DEPOSIT</option>
+                                    <option value="BOND-IN">BOND-IN</option>
+                                    <option value="WITHDRAW">WITHDRAW</option>
+                                    <option value="FUND-TRANSFER">FUND-TRANSFER</option>
+                                    <option value="CONVERT-REWARD">CONVERT-REWARD</option>
+                                    <option value="BOND-REWARD">BOND-REWARD</option>
+                                    <option value="SIGNUP-BONUS">SIGNUP-BONUS</option>
+                                    <option value="LEVEL-AIR-DROP">LEVEL-AIR-DROP</option>
+                                    <option value="REFER-INCOME">REFER-INCOME</option>
+                                    <option value="RANK-UPGRADE-BONUS">RANK-UPGRADE-BONUS</option>
+                                    <option value="DELEGATED-REWARD">DELEGATED-REWARD</option>
+                                    <option value="SWAP-BUSD-TO-TRADE">SWAP-BUSD-TO-TRADE</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="status">Status</label>
+                                <select id="status" class="form-control" [(ngModel)]="status"
+                                    (ngModelChange)="applyFilters()">
+                                    <option value="">All</option>
+                                    <option value="COMPLETED">Completed</option>
+                                    <option value="FAILED">Failed</option>
+                                    <option value="PENDING">Pending</option>
+                                    <option value="REJECTED">Rejected</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
                     <!-- Referral Tree Table -->
                     <div class="mt-4">
                         <!-- Transactions Table -->
@@ -454,6 +520,40 @@
                     </div>
                 </div>
             </div>
+
+            <!-- <div class="row justify-content-center" *ngIf="activeSection === 'Fund_deposit'">
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Fund Deposit:</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="fundDeposite" (ngSubmit)="fundDepositeData()">
+                            <div class="form-group mb-3">
+                                <label for="amount">Amount:</label>
+                                <div class="input-group">
+                                    <input type="text" id="amount" class="form-control" formControlName="amount"
+                                        required />
+
+                                </div>
+                            </div>
+                           
+                            <div class="form-group mb-3">
+                                <label for="referralCode">ReferralCode:</label>
+                                <div class="input-group">
+                                    <input type="text" id="referralCode" class="form-control" formControlName="referralCode"
+                                        required />
+
+                                </div>
+                            </div>
+                           
+                            <button type="submit" class="btn btn-primary btn-block"
+                                [disabled]="fundDeposite.invalid">
+                                 Deposit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div> -->
 
         </div>
     </div>

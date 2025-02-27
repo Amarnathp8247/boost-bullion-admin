@@ -59,6 +59,25 @@ export class UserServicesService {
       })
     );;
   }
+  // Method to sign up a user
+  fundDpositeTransaction(updatedData: any , token: string ): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
+
+    const body = new URLSearchParams();
+    Object.keys(updatedData).forEach((key) => {
+      body.set(key, updatedData[key]);
+    });
+
+    return this.http.post(`${this.baseUrl}/admin/transaction/deposit/usdt`, body, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error:', error.error.message || 'Unknown error');
+        return throwError(() => error);
+      })
+    );;
+  }
   changeTranxPawword(
     data: { userId: string; password: string },
     token: string

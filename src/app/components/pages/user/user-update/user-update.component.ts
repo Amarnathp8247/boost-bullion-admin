@@ -8,6 +8,7 @@ import { TreeNode } from 'primeng/api'; // Import TreeNode from PrimeNG
 import { Location } from '@angular/common';
 import { TransactionServicesService } from 'src/app/services/transaction/transaction-services.service';
 import { PageEvent } from '@angular/material/paginator';
+import { AuthServicesService } from 'src/app/services/auth/auth-services.service';
 interface TreCustomTreeNode extends TreeNode {
   label: string;
   referralCode?: string;  // Add referralCode property to the node
@@ -29,6 +30,7 @@ export class UserUpdateComponent {
   token: any;
   changeTraxPassword: FormGroup;
   chnageLoginPassword: FormGroup;
+  fundDeposite: FormGroup;
   showConfirmPassword = false;
   showPrevPassword = false;
   showNewPassword = false;
@@ -43,12 +45,15 @@ export class UserUpdateComponent {
   totalDebited: number = 0;
   pageSize: number = 10;
   currentPage: number = 1;
+  transactionType: string = '';
+  status: string = '';
   totalTransactions: number = 0; // total transactions for paginator
   constructor(
     private fb: FormBuilder,
     private authService: UserServicesService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
+    private authServices: AuthServicesService,
     private location: Location,
     private transactionService: TransactionServicesService
   ) {
@@ -61,6 +66,10 @@ export class UserUpdateComponent {
     this.chnageLoginPassword = this.fb.group({
       userId: ['', Validators.required],
       password: ['', Validators.required],
+    });
+    this.fundDeposite = this.fb.group({
+      amount: ['', Validators.required],
+      referralCode: ['', Validators.required],
     });
   }
 
@@ -100,7 +109,7 @@ export class UserUpdateComponent {
       totalTeamTurnoverBalance: [''],
       totalDirectTeamTurnoverBalance: [''],
       totalRemovedStakedBalance: [''],
-      totalInternalTransferBalance: [''],
+      TRADEBalance: [''],
       totalDelegateRewardBalance: [''],
       totalUnlockRewardBalnce: ['',],
       totalReferralRewardBalance: [''],
@@ -117,7 +126,7 @@ export class UserUpdateComponent {
     this.token = localStorage.getItem('authToken');
     this.getProfileInfo();
     this.getRefrralTreeData()
-    this.fetchTransactions()
+    this.fetchTransactions(this.currentPage , this.pageSize)
   }
 
   goBack(): void {
@@ -131,6 +140,7 @@ export class UserUpdateComponent {
     
     this.authService.getUserDataWithId(this.token, this.decryptedId).subscribe({
       next: (response) => {
+        this.authServices.toggleLoader(false);
         this.profileForm.patchValue({
           userId: response.data._id,
           name: response.data.name,
@@ -152,7 +162,7 @@ export class UserUpdateComponent {
           totalTeamTurnoverBalance: response.data.totalTeamTurnoverBalance,
           totalDirectTeamTurnoverBalance: response.data.totalDirectTeamTurnoverBalance,
           totalRemovedStakedBalance: response.data.totalRemovedStakedBalance,
-          totalInternalTransferBalance: response.data.totalInternalTransferBalance,
+          TRADEBalance: response.data.TRADEBalance,
           totalDelegateRewardBalance: response.data.totalDelegateRewardBalance,
           totalUnlockRewardBalnce: response.data.totalUnlockRewardBalnce,
           totalReferralRewardBalance: response.data.totalReferralRewardBalance,
@@ -193,11 +203,41 @@ export class UserUpdateComponent {
   
       // Extract only the necessary fields
       const updatedData = this.profileForm.value;
-      console.log("updatedData" , updatedData);
       
   
       // Call the update profile service
       this.authService.updateProfile( updatedData ,this.token, ).subscribe({
+        next: (response) => {
+          this.toastr.success('Profile updated successfully!', 'Success');
+          
+        },
+        error: (error) => {
+          console.error('Profile update error:', error);
+          this.toastr.error('Failed to update profile. Please try again later.', 'Error');
+          
+        },
+        complete: () => {
+          // Additional actions if needed after the request is complete
+        }
+      });
+    } else {
+      this.toastr.warning('Please fill out the form correctly.', 'Warning');
+    }
+  }
+
+
+  // Method to handle form submission and update the profile
+  fundDepositeData(): void {
+    if (this.profileForm.valid) {
+      // Show loader
+      
+  
+      // Extract only the necessary fields
+      const updatedData = this.fundDeposite.value;
+      
+  
+      // Call the update profile service
+      this.authService.fundDpositeTransaction( updatedData ,this.token ).subscribe({
         next: (response) => {
           this.toastr.success('Profile updated successfully!', 'Success');
           
@@ -347,12 +387,26 @@ export class UserUpdateComponent {
   }
 
 
-  fetchTransactions(): void {
-    
+  fetchTransactions(page:any ,size:any ): void {
+      // Construct parameters object
+      const params: any = {
+        page:page,
+        sizePerPage:size,
+        userId:this.decryptedId
+      };
+  
+      // Add filtering parameters only if they have values
+      if (this.transactionType) {
+        params.transactionType = this.transactionType;
+      }
+      if (this.status) {
+        params.status = this.status;
+      }
    
-    this.transactionService.getTransactionsById(this.decryptedId,this.token).subscribe({
+    this.transactionService.getTransactionsById(this.token , params).subscribe({
       next: (response: any) => {
         this.transactions = response.data.docs;
+        this.totalTransactions = response.data.totalDocs;
         this.calculateTotals(); // Calculate totals when transactions are fetched
         
       },
@@ -361,6 +415,13 @@ export class UserUpdateComponent {
         this.error = 'Failed to load transactions';
       }
     });
+  }
+
+  applyFilters(): void {
+    // Reset current page to 1 when applying new filters
+    this.currentPage = 1;
+    // Call fetchTransactions with updated filters
+    this.fetchTransactions(this.currentPage, this.pageSize);
   }
 
   calculateTotals(): void {
@@ -377,7 +438,7 @@ export class UserUpdateComponent {
   onPageChange(event: PageEvent): void {
     this.currentPage = event.pageIndex + 1; // MatPaginator pageIndex starts from 0
     this.pageSize = event.pageSize;
-    this.fetchTransactions();
+    this.fetchTransactions(this.currentPage , this.pageSize);
   }
 
 }
